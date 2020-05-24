@@ -53,10 +53,26 @@ fn or_nand(x: bool, y: bool) -> bool {
     } else { return true }
 }
 
-fn three_way_gate(x: bool, y: bool, z: bool) -> {
-    if z == false {
+fn mux(x: bool, y: bool, sel: bool) -> {
+    if sel == false {
         return x
     } else { return y}
+}
+
+fn dmux(in_bit: bool, sel: bool) {
+    // How would we test this?
+    // Well, if we send in a 1, as the in_bit, and the sel bit is 1,
+    // we should be able to return a/1/true, so the output from our dmux
+    // on those values should be usable in an and test with true, which should
+    // return true.
+    if sel == false {
+        let a = in_bit;
+        return a
+    }
+    else {
+        let b = in_bit;
+        return b
+    }
 }
 fn main() {
     let or_nand_gate_1 = or_nand(true, false);

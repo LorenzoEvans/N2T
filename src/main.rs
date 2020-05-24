@@ -33,6 +33,17 @@ fn or(x: bool, y: bool) -> bool {
     } else { return false }
 }
 
+fn xor(x: bool, y: bool) -> {
+    if x == true && y == false {
+        return true
+    }
+    else if x == false && y == true {
+        return true
+    }
+    else if x == true && y == true {
+        return false
+    } else { return false }
+}
 fn or_nand(x: bool, y: bool) -> bool {
     if nand(x, y) == true {
         return true 
@@ -42,15 +53,35 @@ fn or_nand(x: bool, y: bool) -> bool {
     } else { return true }
 }
 
-
+fn three_way_gate(x: bool, y: bool, z: bool) -> {
+    if z == false {
+        return x
+    } else { return y}
+}
 fn main() {
-    or_nand_gate_1 = or_nand(true, false);
-    or_nand_gate_2 = or_nand(false, false);
+    let or_nand_gate_1 = or_nand(true, false);
+    let or_nand_gate_2 = or_nand(false, false);
+    let or_nand_gate_3 = or_nand(true, true)
 
    #[cfg(test)]
    mod tests {
        fn test_or_nand() {
-           assert!()
+        let or_nand_gate_1 = or_nand(true, false);
+        let or_nand_gate_2 = or_nand(false, false);
+
+           assert_eq!(or_nand_gate_1, true);
+           assert_eq!(or_nand_gate_2, false);
+           assert_eq!(or_nand_gate_3, false);
+       }
+
+       fn test_and() {
+           let and_gate_1 = and(true, true);
+           let and_gate_2 = and(true, false);
+           let and_gate_3 = and(false, false);
+
+           assert_eq!(and_gate_1, true);
+           assert_eq!(and_gate_2, false);
+           assert_eq!(and_gate_3, false);
        }
    }
     println!("{}", or_nand(true, false));

@@ -58,6 +58,18 @@ fn or_16(array_a: [bool; 16], array_b: [bool; 16], out: &mut [bool; 16]) -> [boo
     return *out
 } 
 
+fn or_8w(array: [bool; 8]) -> bool {
+    let mut out: [bool;4] = [true;4];
+    let i = 0;
+    let j = i + 1;
+    while j > array.len() {
+        out[i] == or(array[i], array[j]);
+        i = i + 1;
+    }
+
+    return out
+}
+
 fn xor(x: bool, y: bool) -> bool {
     if x == true && y == false {
         return true
@@ -149,7 +161,7 @@ fn main() {
     let mut out = [true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false];
     let and_16_arr_1 = [false, false, false, false, true, false, true, false, true, false, true, false, true, false, true, false];
     let and_16_arr_2 = [false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true];
-
+    let or_8w_arr_1 = [false, true, false, false, true true, true true]
    #[cfg(test)]
    mod tests {
        fn test_or_nand() {
@@ -173,6 +185,7 @@ fn main() {
    }
     // println!("{}", or_nand(true, false));
     // println!("{:?}", and_16(and_16_arr_1, and_16_arr_2, &mut out));
-    println!("mux_16 is: {:?}", mux_16(and_16_arr_2, and_16_arr_1, false));
+    // println!("mux_16 is: {:?}", mux_16(and_16_arr_2, and_16_arr_1, false));
+    println!("or_8w is: {:?}", or_8w());
     // println!("mux_16 is: {:?}", mux_16(and_16_arr_1, out, true));
 }

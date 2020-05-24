@@ -14,13 +14,14 @@ fn not(x: bool) -> bool {
     else { return true }
 }
 
-fn not_i16(array: &mut [bool]) {
+fn not_16(array: &mut [bool; 16]) -> &mut [bool; 16] {
     if array.len() > 15 {
         println!("You may lose {} bits from this {} bit array!", (array.len() - 15), array.len());
     }
     for i in 1..15 {
         array[i] = not(array[i]) 
     }
+    return array
 }
 
 fn and(x: bool, y: bool) -> bool {
@@ -28,6 +29,14 @@ fn and(x: bool, y: bool) -> bool {
         return true
     }
     else { return false }
+}
+
+fn and_16(array_a: [bool; 16], array_b: [bool; 16], out: &mut [bool; 16]) -> [bool; 16] {
+    for i in 0..15 {
+        out[i] = and(array_a[i], array_b[i])
+    }
+
+    return *out
 }
 
 fn or(x: bool, y: bool) -> bool {
@@ -118,6 +127,9 @@ fn main() {
     let or_nand_gate_1 = or_nand(true, false);
     let or_nand_gate_2 = or_nand(false, false);
     let or_nand_gate_3 = or_nand(true, true);
+    let mut out = [true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false];
+    let and_16_arr_1 = [true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false];
+    let and_16_arr_2 = [false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true];
 
    #[cfg(test)]
    mod tests {
@@ -141,4 +153,5 @@ fn main() {
        }
    }
     println!("{}", or_nand(true, false));
+    println!("{:?}", and_16(and_16_arr_1, and_16_arr_2, &mut out));
 }

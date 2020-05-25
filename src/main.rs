@@ -86,24 +86,28 @@ fn or_nand(x: bool, y: bool) -> bool {
     } else { return true }
 }
 
-fn or_8w(array: [bool; 8], out: &mut [bool;4]) -> [bool; 4] {
+fn or_8w(array_a: [bool; 4], array_b: [bool;4]) -> [bool; 4] {
     // instead of one set of 8 bits, we could do two sets of...
-    for i in 0..7 {
-        let x = array[i];
-        let y = array[i + 1];
-        while array[i + 1] {
-            let out_bit = or(x, y);
-            out[i] = &out_bit
-        }
-        // if i + 1 > array.len() {
-        //     return *out
-        // } else {out[i] = or(x, y);}
+    let mut out: [bool;4] = [true; 4];
+    for i in 0..4 {
+        out[i] = or(array_a[i], array_b[i])
     }
-    // while j > array.len() {
-    //     out[i] = or(array[i], array[j]);
-    //     i = i + 1;
+    // for i in 0..3 {
+    //     let x = array[i];
+    //     let y = array[i + 1];
+    //     while array[i + 1] {
+    //         let out_bit = or(x, y);
+    //         out[i] = &out_bit
+    //     }
+    //     // if i + 1 > array.len() {
+    //     //     return *out
+    //     // } else {out[i] = or(x, y);}
     // }
-    return *out
+    // // while j > array.len() {
+    // //     out[i] = or(array[i], array[j]);
+    // //     i = i + 1;
+    // // }
+    return out
 }
 fn mux(x: bool, y: bool, sel: bool) -> bool {
     // Mux returns one of it's 
@@ -170,7 +174,8 @@ fn main() {
     let out = [true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false];
     let and_16_arr_1 = [false, false, false, false, true, false, true, false, true, false, true, false, true, false, true, false];
     let and_16_arr_2 = [false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true];
-    let or_8w_arr_1 = [false, false, false, false, false, false, false, false];
+    let or_8w_arr_1 = [false, false, false, false];
+    let or_8w_arr_2 = [ true, true, false, false];
     let mut or_out_1 = [true, true, true, true];
    #[cfg(test)]
    mod tests {
@@ -196,7 +201,7 @@ fn main() {
     // println!("{}", or_nand(true, false));
     // println!("{:?}", and_16(and_16_arr_1, and_16_arr_2, &mut out));
     // println!("mux_16 is: {:?}", mux_16(and_16_arr_2, and_16_arr_1, false));
-    println!("or_8w is: {:?}", or_8w(or_8w_arr_1, &mut or_out_1));
+    println!("or_8w is: {:?}", or_8w(or_8w_arr_1, or_8w_arr_2));
     // println!("{}", or(false, false));
     // println!("mux_16 is: {:?}", mux_16(and_16_arr_1, out, true));
 }

@@ -47,28 +47,22 @@ fn or(x: bool, y: bool) -> bool {
     }
     else if x == true && y == true {
         return true
-    } else { return false }
+    } 
+    else if x == false && y == false { 
+        return false 
+    }
+    else {
+        return false
+    }
 }
 
 fn or_16(array_a: [bool; 16], array_b: [bool; 16], out: &mut [bool; 16]) -> [bool; 16] {
     for i in 0..15 {
         out[i] = or(array_a[i], array_b[i]);
     }
-
     return *out
 } 
 
-fn or_8w(array: [bool; 8]) -> bool {
-    let mut out: [bool;4] = [true;4];
-    let i = 0;
-    let j = i + 1;
-    while j > array.len() {
-        out[i] == or(array[i], array[j]);
-        i = i + 1;
-    }
-
-    return out
-}
 
 fn xor(x: bool, y: bool) -> bool {
     if x == true && y == false {
@@ -90,7 +84,25 @@ fn or_nand(x: bool, y: bool) -> bool {
     } else { return true }
 }
 
+fn or_8w(array: [bool; 8], out: &mut [bool;4]) -> [bool; 4] {
+    for i in 0..7 {
+        let x = array[i];
+        let y = array[i + 1];
+        while array[i + 1] {
+            out[i] = or(x, y);
+        }
+        // if i + 1 > array.len() {
+        //     return *out
+        // } else {out[i] = or(x, y);}
+    }
+    // while j > array.len() {
+    //     out[i] = or(array[i], array[j]);
+    //     i = i + 1;
+    // }
+    return *out
+}
 fn mux(x: bool, y: bool, sel: bool) -> bool {
+    // Mux returns one of it's 
     if sel == false {
         return x
     } else { return y}
@@ -100,17 +112,22 @@ fn mux_16(array_a: [bool; 16], array_b: [bool; 16], sel: bool) -> [bool;16] {
     let mut out: [bool; 16] = [true; 16];
     for i in 0..15 {
         out[i] = mux(array_a[i], array_a[i], sel);
-        // if sel == false {
-        //     out[i] = array_a[i] 
-        // }
-        // else {
-        //     out[i] = array_b[i]
-        // }
     }
-
     return out
 }
 
+
+fn dmux(in_bit: bool, sel: bool) -> bool {
+    // How would we test this?
+    // Well, if we send in a 1, as the in_bit, and the sel bit is 1,
+    // we should be able to return a/1/true, so the output from our dmux
+    // on those values should be usable in an and test with true, which should
+    // return true.
+    if sel == false {
+        let a = in_bit;
+        return a
+    } else { let b = in_bit; return b }
+}
 
 fn add_gate(x: bool, y: bool, cin: bool) -> bool {
 
@@ -142,26 +159,15 @@ fn add_gate(x: bool, y: bool, cin: bool) -> bool {
     }
     else { return false }
 }
-
-fn dmux(in_bit: bool, sel: bool) -> bool {
-    // How would we test this?
-    // Well, if we send in a 1, as the in_bit, and the sel bit is 1,
-    // we should be able to return a/1/true, so the output from our dmux
-    // on those values should be usable in an and test with true, which should
-    // return true.
-    if sel == false {
-        let a = in_bit;
-        return a
-    } else { let b = in_bit; return b }
-}
 fn main() {
     let or_nand_gate_1 = or_nand(true, false);
     let or_nand_gate_2 = or_nand(false, false);
     let or_nand_gate_3 = or_nand(true, true);
-    let mut out = [true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false];
+    let out = [true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false];
     let and_16_arr_1 = [false, false, false, false, true, false, true, false, true, false, true, false, true, false, true, false];
     let and_16_arr_2 = [false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true];
-    let or_8w_arr_1 = [false, true, false, false, true true, true true]
+    let or_8w_arr_1 = [false, false, false, false, false, false, false, false];
+    let mut or_out_1 = [true, true, true, true];
    #[cfg(test)]
    mod tests {
        fn test_or_nand() {
@@ -186,6 +192,7 @@ fn main() {
     // println!("{}", or_nand(true, false));
     // println!("{:?}", and_16(and_16_arr_1, and_16_arr_2, &mut out));
     // println!("mux_16 is: {:?}", mux_16(and_16_arr_2, and_16_arr_1, false));
-    println!("or_8w is: {:?}", or_8w());
+    println!("or_8w is: {:?}", or_8w(or_8w_arr_1, &mut or_out_1));
+    // println!("{}", or(false, false));
     // println!("mux_16 is: {:?}", mux_16(and_16_arr_1, out, true));
 }

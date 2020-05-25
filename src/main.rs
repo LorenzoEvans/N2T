@@ -73,7 +73,9 @@ fn xor(x: bool, y: bool) -> bool {
     }
     else if x == true && y == true {
         return false
-    } else { return false }
+    } else if x == false && y == false {
+        return false
+    } else {return false}
 }
 fn or_nand(x: bool, y: bool) -> bool {
     if nand(x, y) == true {
@@ -85,11 +87,13 @@ fn or_nand(x: bool, y: bool) -> bool {
 }
 
 fn or_8w(array: [bool; 8], out: &mut [bool;4]) -> [bool; 4] {
+    // instead of one set of 8 bits, we could do two sets of...
     for i in 0..7 {
         let x = array[i];
         let y = array[i + 1];
         while array[i + 1] {
-            out[i] = or(x, y);
+            let out_bit = or(x, y);
+            out[i] = &out_bit
         }
         // if i + 1 > array.len() {
         //     return *out

@@ -1,20 +1,20 @@
-fn nand(x: bool, y: bool) -> bool {
-    if x == true && y == true {
-        return false
+fn nand(x: i32, y: i32) -> i32 {
+    if x == 1 && y == 1 {
+        return 0
     }
-    else if x == true && y == false {
-        return true
-    } else { return true}
+    else if x == 1 && y == 0 {
+        return 1
+    } else { return 1}
 }
 
-fn not(x: bool) -> bool {
-    if x == true {
-        return false
+fn not(x: i32) -> i32 {
+    if x == 1 {
+        return 0
     }
-    else { return true }
+    else { return 1 }
 }
 
-fn not_16(array: &mut [bool; 16]) -> &mut [bool; 16] {
+fn not_16(array: &mut [i32; 16]) -> &mut [i32; 16] {
     if array.len() > 15 {
         println!("You may lose {} bits from this {} bit array!", (array.len() - 15), array.len());
     }
@@ -24,39 +24,39 @@ fn not_16(array: &mut [bool; 16]) -> &mut [bool; 16] {
     return array
 }
 
-fn and(x: bool, y: bool) -> bool {
-    if x == true && y == true {
-        return true
+fn and(x: i32, y: i32) -> i32 {
+    if x == 1 && y == 1 {
+        return 1
     }
-    else { return false }
+    else { return 0 }
 }
 
-fn and_16(array_a: [bool; 16], array_b: [bool; 16], out: &mut [bool; 16]) -> [bool; 16] {
+fn and_16(array_a: [i32; 16], array_b: [i32; 16], out: &mut [i32; 16]) -> [i32; 16] {
     for i in 0..15 {
         out[i] = and(array_a[i], array_b[i])
     }
     return *out
 }
 
-fn or(x: bool, y: bool) -> bool {
-    if x == true && y == false {
-        return true
+fn or(x: i32, y: i32) -> i32 {
+    if x == 1 && y == 0 {
+        return 1
     }
-    else if x == false && y == true {
-        return true
+    else if x == 0 && y == 1 {
+        return 1
     }
-    else if x == true && y == true {
-        return true
+    else if x == 1 && y == 1 {
+        return 1
     } 
-    else if x == false && y == false { 
-        return false 
+    else if x == 0 && y == 0 { 
+        return 0 
     }
     else {
-        return false
+        return 0
     }
 }
 
-fn or_16(array_a: [bool; 16], array_b: [bool; 16], out: &mut [bool; 16]) -> [bool; 16] {
+fn or_16(array_a: [i32; 16], array_b: [i32; 16], out: &mut [i32; 16]) -> [i32; 16] {
     for i in 0..15 {
         out[i] = or(array_a[i], array_b[i]);
     }
@@ -64,31 +64,31 @@ fn or_16(array_a: [bool; 16], array_b: [bool; 16], out: &mut [bool; 16]) -> [boo
 } 
 
 
-fn xor(x: bool, y: bool) -> bool {
-    if x == true && y == false {
-        return true
+fn xor(x: i32, y: i32) -> i32 {
+    if x == 1 && y == 0 {
+        return 1
     }
-    else if x == false && y == true {
-        return true
+    else if x == 0 && y == 1 {
+        return 1
     }
-    else if x == true && y == true {
-        return false
-    } else if x == false && y == false {
-        return false
-    } else {return false}
+    else if x == 1 && y == 1 {
+        return 0
+    } else if x == 0 && y == 0 {
+        return 0
+    } else {return 0}
 }
-fn or_nand(x: bool, y: bool) -> bool {
-    if nand(x, y) == true {
-        return true 
+fn or_nand(x: i32, y: i32) -> i32 {
+    if nand(x, y) == 1 {
+        return 1 
     } 
     else if !(nand(x, y)) {
-        return false 
-    } else { return true }
+        return 0 
+    } else { return 1 }
 }
 
-fn or_8w(array_a: [bool; 4], array_b: [bool;4]) -> [bool; 4] {
+fn or_8w(array_a: [i32; 4], array_b: [i32;4]) -> [i32; 4] {
     // instead of one set of 8 bits, we could do two sets of...
-    let mut out: [bool;4] = [true; 4];
+    let mut out: [i32;4] = [1; 4];
     for i in 0..4 {
         out[i] = or(array_a[i], array_b[i])
     }
@@ -109,15 +109,15 @@ fn or_8w(array_a: [bool; 4], array_b: [bool;4]) -> [bool; 4] {
     // // }
     return out
 }
-fn mux(x: bool, y: bool, sel: bool) -> bool {
+fn mux(x: i32, y: i32, sel: i32) -> i32 {
     // Mux returns one of it's 
-    if sel == false {
+    if sel == 0 {
         return x
     } else { return y}
 }
 
-fn mux_16(array_a: [bool; 16], array_b: [bool; 16], sel: bool) -> [bool;16] {
-    let mut out: [bool; 16] = [true; 16];
+fn mux_16(array_a: [i32; 16], array_b: [i32; 16], sel: i32) -> [i32;16] {
+    let mut out: [i32; 16] = [1; 16];
     for i in 0..15 {
         out[i] = mux(array_a[i], array_a[i], sel);
     }
@@ -125,20 +125,20 @@ fn mux_16(array_a: [bool; 16], array_b: [bool; 16], sel: bool) -> [bool;16] {
 }
 
 
-fn mux_16_4w(array_a: [bool; 16], array_b: [bool; 16], array_c: [bool; 16], array_d: [bool; 16], sel: [bool; 2]) -> [bool; 16] {
-    let mut out: [bool; 16] = [true; 16];
+fn mux_16_4w(array_a: [i32; 16], array_b: [i32; 16], array_c: [i32; 16], array_d: [i32; 16], sel: [i32; 2]) -> [i32; 16] {
+    let mut out: [i32; 16] = [1; 16];
     
     let sel_1 = sel[0];
     let sel_2 = sel[1];
-    if sel_1 == false && sel_2 == false {
+    if sel_1 == 0 && sel_2 == 0 {
         for i in 0..15 {
             out[i] = array_a[i]
         }
     }
-    else if sel_1 == true && sel_2 == true {
+    else if sel_1 == 1 && sel_2 == 1 {
         out[i] = array_d[i]
     }
-    else if sel_1 == true && sel_2 == false {
+    else if sel_1 == 1 && sel_2 == 0 {
         out[i] = array_c[i]
     }
     else {out[i] = array_b[i]}
@@ -147,100 +147,100 @@ fn mux_16_4w(array_a: [bool; 16], array_b: [bool; 16], array_c: [bool; 16], arra
 }
 
 fn mux_16_8w(
-    array_a: [bool; 16], // 000 // 0
-    array_b: [bool; 16], // 001 // 1
-    array_c: [bool; 16], // 010 // 2
-    array_d: [bool; 16], // 011 // 3
-    array_e: [bool; 16], // 100 // 4
-    array_f: [bool; 16], // 101 // 5
-    array_g: [bool; 16], // 110 // 6
-    array_h: [bool; 16], // 111 // 7
-    sel: [bool; 3]) -> [bool; 16] {
-    let mut out: [bool; 16] = [true; 16];
+    array_a: [i32; 16], // 000 // 0
+    array_b: [i32; 16], // 001 // 1
+    array_c: [i32; 16], // 010 // 2
+    array_d: [i32; 16], // 011 // 3
+    array_e: [i32; 16], // 100 // 4
+    array_f: [i32; 16], // 101 // 5
+    array_g: [i32; 16], // 110 // 6
+    array_h: [i32; 16], // 111 // 7
+    sel: [i32; 3]) -> [i32; 16] {
+    let mut out: [i32; 16] = [1; 16];
     
     let sel_1 = sel[0];
     let sel_2 = sel[1];
     let sel_3 = sel[2];
-    if sel_1 == false && sel_2 == false && sel_3 == false { // 000
+    if sel_1 == 0 && sel_2 == 0 && sel_3 == 0 { // 000
         for i in 0..15 {
             out[i] = array_a[i]
         }
     }
-    else if sel_1 == false && sel_2 == false && sel_3 == true { // 001
+    else if sel_1 == 0 && sel_2 == 0 && sel_3 == 1 { // 001
         for i in 0..15 {
             out[i] = array_b[i]
         }
     }
-    else if sel_1 == false && sel_2 == true && sel_3 == false { // 010
+    else if sel_1 == 0 && sel_2 == 1 && sel_3 == 0 { // 010
         for in 0..15 {
             out[i] = array_c[i]
         }
     }
-    else if sel_1 == false && sel_2 == true && sel_3 == true { // 011
+    else if sel_1 == 0 && sel_2 == 1 && sel_3 == 1 { // 011
         for in 0..15 {
             out[i] = array_d[i]
         }
     }
-    else if sel_1 == true && sel_2 == false && sel_3 == false { // 100
+    else if sel_1 == 1 && sel_2 == 0 && sel_3 == 0 { // 100
         for in 0..15 
             out[i] = array_e[i]
     }
-    else if sel_1 == true && sel_2 == false && sel_3 == true { // 101
+    else if sel_1 == 1 && sel_2 == 0 && sel_3 == 1 { // 101
         out[i] = array_f[i]
     }
-    else if sel_1 == true && sel_2 == true && sel_3 == false { // 110
+    else if sel_1 == 1 && sel_2 == 1 && sel_3 == 0 { // 110
         out[i] = array_g[i]
     }
-    else if sel_1 == true && sel_2 == true && sel_3 == true { // 110
+    else if sel_1 == 1 && sel_2 == 1 && sel_3 == 1 { // 110
         out[i] = array_h[i]
     }
-    else {return false}
+    else {return 0}
 
     return out
 }
 
 
 
-fn dmux(in_bit: bool, sel: bool) -> bool {
+fn dmux(in_bit: i32, sel: i32) -> i32 {
     // How would we test this?
     // Well, if we send in a 1, as the in_bit, and the sel bit is 1,
-    // we should be able to return a/1/true, so the output from our dmux
-    // on those values should be usable in an and test with true, which should
-    // return true.
-    if sel == false {
+    // we should be able to return a/1/1, so the output from our dmux
+    // on those values should be usable in an and test with 1, which should
+    // return 1.
+    if sel == 0 {
         let a = in_bit;
-        let b = false;
+        let b = 0;
         (a, b)
-    } else { let b = in_bit; let a = false; (a, b)}
+    } else { let b = in_bit; let a = 0; (a, b)}
 }
 
-fn dmux_4w(in_bit: bool, sel: [bool;2]) -> {
+fn dmux_4w(in_bit: i32, sel: [i32;2]) -> {
     let (sel_1, sel_2) = (sel[0], sel[1]);
 
-    if sel_1 == false && sel_2 == false {
+    if sel_1 == 0 && sel_2 == 0 {
         let a = in_bit;
-        let (b, c, d) = (false, false, false);
+        let (b, c, d) = (0, 0, 0);
         return (a, b, c, d)
     }
-    else if sel_1 == false && sel_2 == true {
+    else if sel_1 == 0 && sel_2 == 1 {
         let b = in_bit;
-        let (a, c, d) = (false, false, false);
+        let (a, c, d) = (0, 0, 0);
         return (a, b, c, d)
     }
-    else if sel_1 == true && sel_2 == false {
+    else if sel_1 == 1 && sel_2 == 0 {
         let c = in_bit;
-        let (a, b, d) = (false, false, false);
+        let (a, b, d) = (0, 0, 0);
         return (a, b, c, d)
         
     }
     else {
         let d = in_bit;
-        let (a, b, c) = (false, false, false);
+        let (a, b, c) = (0, 0, 0);
         return (a, b, c, d)
     }
 }
-fn dmux_8w(in_bit: bool, sel: [bool;3]) -> {
-    let out_bits: (bool, bool, bool, bool, bool, bool, bool, bool, ) = (false, false, false, false, false, false, false, false, ) ;
+fn dmux_8w(in_bit: i32, sel: [i32;3]) -> {
+    let out_bits: (i32, i32, i32, i32, i32, i32, i32, i32, ) = (0, 0, 0, 0, 0, 0, 0, 0, ) ;
     let (sel_1, sel_2, sel_3) = (sel[0], sel[1], sel[2]);
                     // 001 // 1
                     // 010 // 2
@@ -249,94 +249,94 @@ fn dmux_8w(in_bit: bool, sel: [bool;3]) -> {
                     // 101 // 5
                     // 110 // 6
                     // 111 // 7
-    if sel_1 == false && sel_2 == false && sel_3 == false { // 000 // 0
+    if sel_1 == 0 && sel_2 == 0 && sel_3 == 0 { // 000 // 0
         let a = out_bits.0;
-        let a = true
+        let a = 1
         let (_, b, c, d, e, f, g, h) = out_bits;
         return (a, b, c, d, e, f, g, h)
 
     }
-    if sel_1 == false && sel_2 == true && sel_3 == false { // 010 // 1
+    if sel_1 == 0 && sel_2 == 1 && sel_3 == 0 { // 010 // 1
         let a = out_bits.0;
-        let a = true
+        let a = 1
         let (_, b, c, d, e, f, g, h) = out_bits;
         return (a, b, c, d, e, f, g, h)
 
     }
-    if sel_1 == false && sel_2 == true && sel_3 == false { // 011 // 2
+    if sel_1 == 0 && sel_2 == 1 && sel_3 == 0 { // 011 // 2
         let a = out_bits.0;
-        let a = true
+        let a = 1
         let (_, b, c, d, e, f, g, h) = out_bits;
         return (a, b, c, d, e, f, g, h)
 
     }
 }
 
-fn add_gate(x: bool, y: bool, cin: bool) -> bool {
+fn add_gate(x: i32, y: i32, cin: i32) -> i32 {
 
-    // We understand this somewhat in terms of the boolean,
+    // We understand this somewhat in terms of the i32ean,
     // conditions, but thinking about how these bit operations
     // correspond to addition is a bit out of reach at the moment.
     // The carry in bit signifies a place holder for the 10's or 100's
     // place if the previous operands overflow from the previous...register?
-    if x == false && y == false && cin == false { // 000
-        return false
+    if x == 0 && y == 0 && cin == 0 { // 000
+        return 0
     }
-    else if x == false && y == false && cin == true { // 001
-        return false
+    else if x == 0 && y == 0 && cin == 1 { // 001
+        return 0
     }
-    else if x == false && y == true && cin == true { // 011
-        return true
+    else if x == 0 && y == 1 && cin == 1 { // 011
+        return 1
     }
-    else if x == false && y == true && cin == false {// 010
-        return false
+    else if x == 0 && y == 1 && cin == 0 {// 010
+        return 0
     }
-    else if x == true && y == true && cin == false {// 110
-        return true
+    else if x == 1 && y == 1 && cin == 0 {// 110
+        return 1
     }
-    else if x == true && y == true && cin == true {// 110
-        return true
+    else if x == 1 && y == 1 && cin == 1 {// 110
+        return 1
     }
-    else if x == true && y == false && cin == true {// 110
-        return true
+    else if x == 1 && y == 0 && cin == 1 {// 110
+        return 1
     }
-    else { return false }
+    else { return 0 }
 }
 fn main() {
-    let or_nand_gate_1 = or_nand(true, false);
-    let or_nand_gate_2 = or_nand(false, false);
-    let or_nand_gate_3 = or_nand(true, true);
-    let out = [true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false];
-    let and_16_arr_1 = [false, false, false, false, true, false, true, false, true, false, true, false, true, false, true, false];
-    let and_16_arr_2 = [false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true];
-    let or_8w_arr_1 = [false, false, false, false];
-    let or_8w_arr_2 = [ true, true, false, false];
-    let mut or_out_1 = [true, true, true, true];
+    let or_nand_gate_1 = or_nand(1, 0);
+    let or_nand_gate_2 = or_nand(0, 0);
+    let or_nand_gate_3 = or_nand(1, 1);
+    let out = [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
+    let and_16_arr_1 = [0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
+    let and_16_arr_2 = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1];
+    let or_8w_arr_1 = [0, 0, 0, 0];
+    let or_8w_arr_2 = [ 1, 1, 0, 0];
+    let mut or_out_1 = [1, 1, 1, 1];
    #[cfg(test)]
    mod tests {
        fn test_or_nand() {
-        let or_nand_gate_1 = or_nand(true, false);
-        let or_nand_gate_2 = or_nand(false, false);
+        let or_nand_gate_1 = or_nand(1, 0);
+        let or_nand_gate_2 = or_nand(0, 0);
 
-           assert_eq!(or_nand_gate_1, true);
-           assert_eq!(or_nand_gate_2, false);
-           assert_eq!(or_nand_gate_3, false);
+           assert_eq!(or_nand_gate_1, 1);
+           assert_eq!(or_nand_gate_2, 0);
+           assert_eq!(or_nand_gate_3, 0);
        }
 
        fn test_and() {
-           let and_gate_1 = and(true, true);
-           let and_gate_2 = and(true, false);
-           let and_gate_3 = and(false, false);
+           let and_gate_1 = and(1, 1);
+           let and_gate_2 = and(1, 0);
+           let and_gate_3 = and(0, 0);
 
-           assert_eq!(and_gate_1, true);
-           assert_eq!(and_gate_2, false);
-           assert_eq!(and_gate_3, false);
+           assert_eq!(and_gate_1, 1);
+           assert_eq!(and_gate_2, 0);
+           assert_eq!(and_gate_3, 0);
        }
    }
-    // println!("{}", or_nand(true, false));
+    // println!("{}", or_nand(1, 0));
     // println!("{:?}", and_16(and_16_arr_1, and_16_arr_2, &mut out));
-    // println!("mux_16 is: {:?}", mux_16(and_16_arr_2, and_16_arr_1, false));
+    // println!("mux_16 is: {:?}", mux_16(and_16_arr_2, and_16_arr_1, 0));
     println!("or_8w is: {:?}", or_8w(or_8w_arr_1, or_8w_arr_2));
-    // println!("{}", or(false, false));
-    // println!("mux_16 is: {:?}", mux_16(and_16_arr_1, out, true));
+    // println!("{}", or(0, 0));
+    // println!("mux_16 is: {:?}", mux_16(and_16_arr_1, out, 1));
 }

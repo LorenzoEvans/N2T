@@ -167,16 +167,23 @@ fn mux_16_8w(
         }
     }
     else if sel_1 == false && sel_2 == false && sel_3 == true { // 001
-        out[i] = array_b[i]
+        for i in 0..15 {
+            out[i] = array_b[i]
+        }
     }
     else if sel_1 == false && sel_2 == true && sel_3 == false { // 010
-        out[i] = array_c[i]
+        for in 0..15 {
+            out[i] = array_c[i]
+        }
     }
     else if sel_1 == false && sel_2 == true && sel_3 == true { // 011
-        out[i] = array_d[i]
+        for in 0..15 {
+            out[i] = array_d[i]
+        }
     }
     else if sel_1 == true && sel_2 == false && sel_3 == false { // 100
-        out[i] = array_e[i]
+        for in 0..15 
+            out[i] = array_e[i]
     }
     else if sel_1 == true && sel_2 == false && sel_3 == true { // 101
         out[i] = array_f[i]
@@ -202,15 +209,50 @@ fn dmux(in_bit: bool, sel: bool) -> bool {
     // return true.
     if sel == false {
         let a = in_bit;
-        return a
-    } else { let b = in_bit; return b }
+        let b = false;
+        (a, b)
+    } else { let b = in_bit; let a = false; (a, b)}
 }
 
 fn dmux_4w(in_bit: bool, sel: [bool;2]) -> {
     let (sel_1, sel_2) = (sel[0], sel[1]);
+
+    if sel_1 == false && sel_2 == false {
+        let a = in_bit;
+        let (b, c, d) = (false, false, false);
+        return (a, b, c, d)
+    }
+    else if sel_1 == false && sel_2 == true {
+        let b = in_bit;
+        let (a, c, d) = (false, false, false);
+        return (a, b, c, d)
+    }
+    else if sel_1 == true && sel_2 == false {
+        let c = in_bit;
+        let (a, b, d) = (false, false, false);
+        return (a, b, c, d)
+        
+    }
+    else {
+        let d = in_bit;
+        let (a, b, c) = (false, false, false);
+        return (a, b, c, d)
+    }
 }
 fn dmux_8w(in_bit: bool, sel: [bool;3]) -> {
-let (sel_1, sel_2, sel_3) = (sel[0], sel[1], sel[2]);
+    let (sel_1, sel_2, sel_3) = (sel[0], sel[1], sel[2]);
+                    // 001 // 1
+                    // 010 // 2
+                    // 011 // 3
+                    // 100 // 4
+                    // 101 // 5
+                    // 110 // 6
+                    // 111 // 7
+    if sel_1 == false && sel_2 == false && sel_3 == false { // 000 // 0
+        let a = in_bit;
+        let (b, c, d, e, f, g, h) = (false, false, false, false, false, false, false, )
+
+    }
 }
 
 fn add_gate(x: bool, y: bool, cin: bool) -> bool {

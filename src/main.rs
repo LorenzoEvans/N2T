@@ -242,34 +242,57 @@ fn dmux_4w(in_bit: i32, sel: [i32;2]) -> {
 fn dmux_8w(in_bit: i32, sel: [i32;3]) -> {
     let out_bits: (i32, i32, i32, i32, i32, i32, i32, i32, ) = (0, 0, 0, 0, 0, 0, 0, 0, ) ;
     let (sel_1, sel_2, sel_3) = (sel[0], sel[1], sel[2]);
-                    // 001 // 1
-                    // 010 // 2
-                    // 011 // 3
                     // 100 // 4
                     // 101 // 5
                     // 110 // 6
                     // 111 // 7
     if sel_1 == 0 && sel_2 == 0 && sel_3 == 0 { // 000 // 0
-        let a = out_bits.0;
-        let a = 1
-        let (_, b, c, d, e, f, g, h) = out_bits;
+        let a = in_bit;
         return (a, b, c, d, e, f, g, h)
 
     }
-    if sel_1 == 0 && sel_2 == 1 && sel_3 == 0 { // 010 // 1
-        let a = out_bits.0;
-        let a = 1
-        let (_, b, c, d, e, f, g, h) = out_bits;
+    if sel_1 == 0 && sel_2 == 1 && sel_3 == 0 { // 001 // 1
+        let b = in_bit;
+        let (a, _, c, d, e, f, g, h) = out_bits;
         return (a, b, c, d, e, f, g, h)
 
     }
-    if sel_1 == 0 && sel_2 == 1 && sel_3 == 0 { // 011 // 2
-        let a = out_bits.0;
-        let a = 1
-        let (_, b, c, d, e, f, g, h) = out_bits;
+    else if sel_1 == 0 && sel_2 == 1 && sel_3 == 0 { // 010 // 2
+        let c = in_bit;
+        let (a, b, _, d, e, f, g, h) = out_bits;
         return (a, b, c, d, e, f, g, h)
 
     }
+    else if sel_1 == 0 && sel_2 == 1 && sel_3 == 1 { // 011 // 3
+        let d = in_bit;
+        let (a, b, c, _, e, f, g, h) = out_bits;
+        return (a, b, c, d, e, f, g, h)
+
+    }
+    else if sel_1 == 1 && sel_2 == 0 && sel_3 == 0 { // 100 // 4
+        let e = in_bit;
+        let (a, b, c, d, _, f, g, h) = out_bits;
+        return (a, b, c, d, e, f, g, h)
+
+    }
+    else if sel_1 == 1 && sel_2 == 0 && sel_3 == 1 { // 101 // 5
+        let f = in_bit;
+        let (a, b, c, d, e, _, g, h) = out_bits;
+        return (a, b, c, d, e, f, g, h)
+
+    }
+    else if sel_1 == 1 && sel_2 == 1 && sel_3 == 0 { // 110 // 6
+        let g = in_bit;
+        let (a, b, c, d, e, f, _, h) = out_bits;
+        return (a, b, c, d, e, f, g, h)
+
+    }
+    else if sel_1 == 1 && sel_2 == 1 && sel_3 == 1 { // 111 // 67
+        let h = in_bit;
+        let (a, b, c, d, e, f, g, _) = out_bits;
+        return (a, b, c, d, e, f, g, h)
+
+    } else { return false}
 }
 
 fn add_gate(x: i32, y: i32, cin: i32) -> i32 {

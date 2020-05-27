@@ -147,28 +147,29 @@ fn mux_16_4w(array_a: [bool; 16], array_b: [bool; 16], array_c: [bool; 16], arra
 }
 
 fn mux_16_8w(
-    array_a: [bool; 16], 
-    array_b: [bool; 16], 
-    array_c: [bool; 16], 
-    array_d: [bool; 16], 
-    array_e: [bool; 16],
-    array_f: [bool; 16],
-    array_g: [bool; 16],
-    array_h: [bool; 16], sel: [bool; 3]) -> [bool; 16] {
+    array_a: [bool; 16], // 000 // 0
+    array_b: [bool; 16], // 001 // 1
+    array_c: [bool; 16], // 010 // 2
+    array_d: [bool; 16], // 011 // 3
+    array_e: [bool; 16], // 101 // 4
+    array_f: [bool; 16], // 101 // 5
+    array_g: [bool; 16], // 110 // 6
+    array_h: [bool; 16], // 111 // 7
+    sel: [bool; 3]) -> [bool; 16] {
     let mut out: [bool; 16] = [true; 16];
     
     let sel_1 = sel[0];
     let sel_2 = sel[1];
     let sel_3 = sel[2];
-    if sel_1 == false && sel_2 == false {
+    if sel_1 == false && sel_2 == false && sel_3 == false {
         for i in 0..15 {
             out[i] = array_a[i]
         }
     }
-    else if sel_1 == true && sel_2 == true {
-        out[i] = array_d[i]
+    else if sel_1 == false && sel_2 == false && sel_3 == true {
+        out[i] = array_b[i]
     }
-    else if sel_1 == true && sel_2 == false {
+    else if sel_1 == false && sel_2 == true && sel_3 == false {
         out[i] = array_c[i]
     }
     else {out[i] = array_b[i]}

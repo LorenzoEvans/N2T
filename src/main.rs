@@ -81,7 +81,7 @@ fn or_nand(x: i32, y: i32) -> i32 {
     if nand(x, y) == 1 {
         return 1 
     } 
-    else if !(nand(x, y)) {
+    else if nand(x, y) == 0 {
         return 0 
     } else { return 1 }
 }
@@ -136,12 +136,20 @@ fn mux_16_4w(array_a: [i32; 16], array_b: [i32; 16], array_c: [i32; 16], array_d
         }
     }
     else if sel_1 == 1 && sel_2 == 1 {
-        out[i] = array_d[i]
+        for i in 0..15 {
+            out[i] = array_d[i]
+        }
     }
     else if sel_1 == 1 && sel_2 == 0 {
-        out[i] = array_c[i]
+        for i in 0..15 {
+            out[i] = array_c[i]
+        }
     }
-    else {out[i] = array_b[i]}
+    else {
+        for i in 0..15 {
+            out[i] = array_b[i]
+        }
+    }
 
     return out
 }
@@ -172,36 +180,42 @@ fn mux_16_8w(
         }
     }
     else if sel_1 == 0 && sel_2 == 1 && sel_3 == 0 { // 010
-        for in 0..15 {
+        for i in 0..15 {
             out[i] = array_c[i]
         }
     }
     else if sel_1 == 0 && sel_2 == 1 && sel_3 == 1 { // 011
-        for in 0..15 {
+        for i in 0..15 {
             out[i] = array_d[i]
         }
     }
     else if sel_1 == 1 && sel_2 == 0 && sel_3 == 0 { // 100
-        for in 0..15 
+        for i in 0..15 {
             out[i] = array_e[i]
+        }
     }
     else if sel_1 == 1 && sel_2 == 0 && sel_3 == 1 { // 101
-        out[i] = array_f[i]
+        for i in 0..15 { 
+            out[i] = array_f[i]
+        }
     }
     else if sel_1 == 1 && sel_2 == 1 && sel_3 == 0 { // 110
-        out[i] = array_g[i]
+        for i in 0..15 { 
+            out[i] = array_g[i]
+        }
     }
-    else if sel_1 == 1 && sel_2 == 1 && sel_3 == 1 { // 110
-        out[i] = array_h[i]
+    else { // 111 the only possible combo left, so else block
+        for i in 0..15 {
+            out[i] = array_h[i]
+        }
     }
-    else {return 0}
 
     return out
 }
 
 
 
-fn dmux(in_bit: i32, sel: i32) -> i32 {
+fn dmux(in_bit: i32, sel: i32) -> (i32, i32) {
     // How would we test this?
     // Well, if we send in a 1, as the in_bit, and the sel bit is 1,
     // we should be able to return a/1/1, so the output from our dmux
@@ -214,7 +228,7 @@ fn dmux(in_bit: i32, sel: i32) -> i32 {
     } else { let b = in_bit; let a = 0; (a, b)}
 }
 
-fn dmux_4w(in_bit: i32, sel: [i32;2]) -> {
+fn dmux_4w(in_bit: i32, sel: [i32;2]) -> (i32, i32, i32, i32) {
     let (sel_1, sel_2) = (sel[0], sel[1]);
 
     if sel_1 == 0 && sel_2 == 0 {
@@ -239,15 +253,12 @@ fn dmux_4w(in_bit: i32, sel: [i32;2]) -> {
         return (a, b, c, d)
     }
 }
-fn dmux_8w(in_bit: i32, sel: [i32;3]) -> {
+fn dmux_8w(in_bit: i32, sel: [i32;3]) -> (i32, i32, i32, i32, i32, i32, i32, i32,) {
     let out_bits: (i32, i32, i32, i32, i32, i32, i32, i32, ) = (0, 0, 0, 0, 0, 0, 0, 0, ) ;
     let (sel_1, sel_2, sel_3) = (sel[0], sel[1], sel[2]);
-                    // 100 // 4
-                    // 101 // 5
-                    // 110 // 6
-                    // 111 // 7
     if sel_1 == 0 && sel_2 == 0 && sel_3 == 0 { // 000 // 0
         let a = in_bit;
+        let (_, b, c, d, e, f, g, h) = out_bits;
         return (a, b, c, d, e, f, g, h)
 
     }
@@ -287,12 +298,12 @@ fn dmux_8w(in_bit: i32, sel: [i32;3]) -> {
         return (a, b, c, d, e, f, g, h)
 
     }
-    else if sel_1 == 1 && sel_2 == 1 && sel_3 == 1 { // 111 // 67
+    else  { // 111 only possible combination left
         let h = in_bit;
         let (a, b, c, d, e, f, g, _) = out_bits;
         return (a, b, c, d, e, f, g, h)
 
-    } else { return false}
+    } 
 }
 
 fn add_gate(x: i32, y: i32, cin: i32) -> i32 {

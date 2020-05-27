@@ -124,17 +124,58 @@ fn mux_16(array_a: [bool; 16], array_b: [bool; 16], sel: bool) -> [bool;16] {
     return out
 }
 
+
 fn mux_16_4w(array_a: [bool; 16], array_b: [bool; 16], array_c: [bool; 16], array_d: [bool; 16], sel: [bool; 2]) -> [bool; 16] {
     let mut out: [bool; 16] = [true; 16];
-    let sel_chk = |a, b| -> {
-        if a == true && b == true {
-
-        }
-    }
+    
     let sel_1 = sel[0];
     let sel_2 = sel[1];
-    if sel_1 ==
+    if sel_1 == false && sel_2 == false {
+        for i in 0..15 {
+            out[i] = array_a[i]
+        }
+    }
+    else if sel_1 == true && sel_2 == true {
+        out[i] = array_d[i]
+    }
+    else if sel_1 == true && sel_2 == false {
+        out[i] = array_c[i]
+    }
+    else {out[i] = array_b[i]}
+
+    return out
 }
+
+fn mux_16_8w(
+    array_a: [bool; 16], 
+    array_b: [bool; 16], 
+    array_c: [bool; 16], 
+    array_d: [bool; 16], 
+    array_e: [bool; 16],
+    array_f: [bool; 16],
+    array_g: [bool; 16],
+    array_h: [bool; 16], sel: [bool; 3]) -> [bool; 16] {
+    let mut out: [bool; 16] = [true; 16];
+    
+    let sel_1 = sel[0];
+    let sel_2 = sel[1];
+    let sel_3 = sel[2];
+    if sel_1 == false && sel_2 == false {
+        for i in 0..15 {
+            out[i] = array_a[i]
+        }
+    }
+    else if sel_1 == true && sel_2 == true {
+        out[i] = array_d[i]
+    }
+    else if sel_1 == true && sel_2 == false {
+        out[i] = array_c[i]
+    }
+    else {out[i] = array_b[i]}
+
+    return out
+}
+
 
 
 fn dmux(in_bit: bool, sel: bool) -> bool {

@@ -124,6 +124,18 @@ fn mux_16(array_a: [bool; 16], array_b: [bool; 16], sel: bool) -> [bool;16] {
     return out
 }
 
+fn mux_16_4w(array_a: [bool; 16], array_b: [bool; 16], array_c: [bool; 16], array_d: [bool; 16], sel: [bool; 2]) -> [bool; 16] {
+    let mut out: [bool; 16] = [true; 16];
+    let sel_chk = |a, b| -> {
+        if a == true && b == true {
+
+        }
+    }
+    let sel_1 = sel[0];
+    let sel_2 = sel[1];
+    if sel_1 ==
+}
+
 
 fn dmux(in_bit: bool, sel: bool) -> bool {
     // How would we test this?

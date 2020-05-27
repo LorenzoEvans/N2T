@@ -206,6 +206,13 @@ fn dmux(in_bit: bool, sel: bool) -> bool {
     } else { let b = in_bit; return b }
 }
 
+fn dmux_4w(in_bit: bool, sel: [bool;2]) -> {
+    let (sel_1, sel_2) = (sel[0], sel[1]);
+}
+fn dmux_8w(in_bit: bool, sel: [bool;3]) -> {
+let (sel_1, sel_2, sel_3) = (sel[0], sel[1], sel[2]);
+}
+
 fn add_gate(x: bool, y: bool, cin: bool) -> bool {
 
     // We understand this somewhat in terms of the boolean,

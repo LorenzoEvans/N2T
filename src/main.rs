@@ -240,6 +240,7 @@ fn dmux_4w(in_bit: bool, sel: [bool;2]) -> {
     }
 }
 fn dmux_8w(in_bit: bool, sel: [bool;3]) -> {
+    let out_bits: (bool, bool, bool, bool, bool, bool, bool, bool, ) = (false, false, false, false, false, false, false, false, ) ;
     let (sel_1, sel_2, sel_3) = (sel[0], sel[1], sel[2]);
                     // 001 // 1
                     // 010 // 2
@@ -249,8 +250,24 @@ fn dmux_8w(in_bit: bool, sel: [bool;3]) -> {
                     // 110 // 6
                     // 111 // 7
     if sel_1 == false && sel_2 == false && sel_3 == false { // 000 // 0
-        let a = in_bit;
-        let (b, c, d, e, f, g, h) = (false, false, false, false, false, false, false, )
+        let a = out_bits.0;
+        let a = true
+        let (_, b, c, d, e, f, g, h) = out_bits;
+        return (a, b, c, d, e, f, g, h)
+
+    }
+    if sel_1 == false && sel_2 == true && sel_3 == false { // 010 // 1
+        let a = out_bits.0;
+        let a = true
+        let (_, b, c, d, e, f, g, h) = out_bits;
+        return (a, b, c, d, e, f, g, h)
+
+    }
+    if sel_1 == false && sel_2 == true && sel_3 == false { // 011 // 2
+        let a = out_bits.0;
+        let a = true
+        let (_, b, c, d, e, f, g, h) = out_bits;
+        return (a, b, c, d, e, f, g, h)
 
     }
 }

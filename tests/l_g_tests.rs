@@ -93,18 +93,23 @@ mod l_g_tests {
         
         assert_eq!(xor_gate_1, 0);
         assert_eq!(xor_gate_2, 1);
-        assert_eq!(xor_gate_3, 0);
+        assert_eq!(xor_gate_3, 1);
         assert_eq!(xor_gate_4, 0);
     }
     #[test]
     fn test_or_16() {
         let or_16_arr_1 = [0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
         let or_16_arr_2 = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1];
+        let mut or_16_out =   [0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+        assert_eq!(or_16(or_16_arr_1, or_16_arr_2, &mut or_16_out), [0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
     }
     #[test]
     fn test_or_8w() {
         let or_8w_arr_1 = [0, 0, 0, 0];
         let or_8w_arr_2 = [ 1, 1, 0, 0];
+        let or_8w_out = [1, 1, 0, 0]
+
+        assert_eq!(or_8w(or_8w_arr_1, or_8w_arr_2))
     }
     #[test]
     fn test_mux() {

@@ -9,15 +9,15 @@ mod l_g_tests {
     // let mut or_out_1 = [1, 1, 1, 1];
     #[test]
     fn test_nand() {
-        let nand_1 = (true, true);
-        let nand_2 = (true, false);
-        let nand_3 = (false, false);
-        let nand_4 = (false, true);
+        let nand_1 = (1, 1);
+        let nand_2 = (1, 0);
+        let nand_3 = (0, 0);
+        let nand_4 = (0, 1);
 
-        assert_eq!(nand(nand_1.0, nand_1.1), false);
-        assert_eq!(nand(nand_2.0, nand_1.1), true);
-        assert_eq!(nand(nand_3.0, nand_1.1), false);
-        assert_eq!(nand(nand_4.0, nand_1.1), true);
+        assert_eq!(nand(nand_1.1, nand_1.0), 0);
+        assert_eq!(nand(nand_2.0, nand_2.1), 1);
+        assert_eq!(nand(nand_3.0, nand_3.1), 1);
+        assert_eq!(nand(nand_4.0, nand_4.1), 1);
     }
     #[test]
     fn test_or_nand() {
@@ -26,7 +26,7 @@ mod l_g_tests {
         let or_nand_gate_3 = or_nand(1, 1);
 
         assert_eq!(or_nand_gate_1, 1);
-        assert_eq!(or_nand_gate_2, 0);
+        assert_eq!(or_nand_gate_2, 1);
         assert_eq!(or_nand_gate_3, 0);
     }
     #[test]

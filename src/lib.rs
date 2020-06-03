@@ -1,12 +1,18 @@
 pub fn nand(x: i32, y: i32) -> i32 {
-    if x == 1 && y == 1 {
+    if y == 1 && x == 1 {
         return 0
     }
-    else if x == 1 && y == 0 {
+    else if y == 0 && x == 1 {
         return 1
-    } else { return 1}
+    } else if x == 0 && y == 1 {
+        return 1
+    } else if x == 0 && y == 0 {
+        return 1
+    }
+    else {
+        panic!("Input not operable.")
+    }
 }
-
 pub fn not(x: i32) -> i32 {
     if x == 1 {
         return 0
@@ -42,7 +48,7 @@ pub fn or(x: i32, y: i32) -> i32 {
     if x == 1 && y == 0 {
         return 1
     }
-    else if x == 0 && y == 1 {
+    else if y == 1 && y == 0 {
         return 1
     }
     else if x == 1 && y == 1 {

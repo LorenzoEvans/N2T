@@ -1,7 +1,6 @@
 // use crate::l_g::{and, or_nand, or_8w};
-mod l_g;
 fn main() {
-  
+    println!("Test nand_2 is: {}", nand2_tetris::nand(1, 0))
     // println!("{}", or_nand(1, 0));
     // println!("{:?}", and_16(and_16_arr_1, and_16_arr_2, &mut out));
     // println!("mux_16 is: {:?}", mux_16(and_16_arr_2, and_16_arr_1, 0));

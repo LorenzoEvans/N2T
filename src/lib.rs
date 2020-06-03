@@ -38,7 +38,7 @@ pub fn and(x: i32, y: i32) -> i32 {
 }
 
 pub fn and_16(array_a: [i32; 16], array_b: [i32; 16], out: &mut [i32; 16]) -> [i32; 16] {
-    for i in 0..15 {
+    for i in 0..16 {
         out[i] = and(array_a[i], array_b[i])
     }
     return *out

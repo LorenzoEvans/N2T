@@ -56,8 +56,21 @@ mod l_g_tests {
     }
     #[test]
     fn test_and_16() {
-        let and_16_arr_1 = [0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
-        let and_16_arr_2 = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1];
+        // Mocked Input
+        let mut mocked_out = [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
+        let array_a = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+        let array_b = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        let array_c = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+        let and_16_arr_1 = and_16(array_a, array_b, &mut mocked_out);
+        let and_16_arr_2 = and_16(array_a, array_c, &mut mocked_out);
+        // let and_16_arr_4 = and_16([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+
+        // Mocked Outputß
+        let match_output_1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        let match_output_2 = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+        // let and_16_arr_1_out = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        assert_eq!(and_16_arr_1, match_output_1);
+        assert_eq!(and_16_arr_2, match_output_2);
     }
     #[test]
     fn test_or() {
@@ -85,7 +98,8 @@ mod l_g_tests {
     }
     #[test]
     fn test_or_16() {
-
+        let or_16_arr_1 = [0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
+        let or_16_arr_2 = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1];
     }
     #[test]
     fn test_or_8w() {
@@ -126,6 +140,7 @@ mod l_g_tests {
     }
     #[test]
     fn test_dmux_4w() {
+        let sel: [i32;2] = [0, 1];
         let (sel_1, sel_2) = (sel[0], sel[1]);
     }
     #[test]

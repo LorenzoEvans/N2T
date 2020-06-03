@@ -73,7 +73,15 @@ mod l_g_tests {
     }
     #[test]
     fn test_xor() {
-        \
+        let xor_gate_1 = xor(0, 0);
+        let xor_gate_2 = xor(1, 0);
+        let xor_gate_3 = xor(0, 1);
+        let xor_gate_4 = xor(1, 1);
+        
+        assert_eq!(xor_gate_1, 0);
+        assert_eq!(xor_gate_2, 1);
+        assert_eq!(xor_gate_3, 0);
+        assert_eq!(xor_gate_4, 0);
     }
     #[test]
     fn test_or_16() {
@@ -133,7 +141,7 @@ mod l_g_tests {
     }
     #[test]
     fn test_not_16() {
-
+        let not_16_arr_1 = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1];
     }
 
 }

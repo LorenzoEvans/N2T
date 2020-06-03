@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod l_g_tests {
-    use nand2_tetris::{nand, or_nand, and};
+    use nand2_tetris::{nand, or_nand, and, or};
     // let out = [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
     // let and_16_arr_1 = [0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
     // let and_16_arr_2 = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1];
@@ -40,5 +40,17 @@ mod l_g_tests {
         assert_eq!(and_gate_2, 0);
         assert_eq!(and_gate_3, 0);
         assert_eq!(and_gate_3, 0);
+    }
+    #[test]
+    fn test_or() {
+        let or_gate_1 = or(0, 0);
+        let or_gate_2 = or(1, 0);
+        let or_gate_3 = or(0, 1);
+        let or_gate_4 = or(1, 1);
+
+        assert_eq!(or_gate_1, 0);
+        assert_eq!(or_gate_2, 1);
+        assert_eq!(or_gate_3, 1);
+        assert_eq!(or_gate_4, 1);
     }
 }

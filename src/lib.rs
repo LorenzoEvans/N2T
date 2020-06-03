@@ -45,10 +45,10 @@ pub fn and_16(array_a: [i32; 16], array_b: [i32; 16], out: &mut [i32; 16]) -> [i
 }
 
 pub fn or(x: i32, y: i32) -> i32 {
-    if x == 1 && y == 0 {
+    if y == 0 && x == 1 {
         return 1
     }
-    else if y == 1 && y == 0 {
+    else if y == 1 && x == 0 {
         return 1
     }
     else if x == 1 && y == 1 {

@@ -1,3 +1,4 @@
+pub mod adders;
 pub fn nand(x: i32, y: i32) -> i32 {
     if y == 1 && x == 1 {
         return 0

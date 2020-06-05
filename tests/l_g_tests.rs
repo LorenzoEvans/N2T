@@ -161,20 +161,91 @@ mod l_g_tests {
                                 mux_16_4w_arr_4, 
                                 [1, 1]), mux_16_4w_arr_4);
     }
-    // #[test]
-    // fn test_mux_16_8w() {
-    //     let mux_16_8w_arr_1 = [0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
-    //     let mux_16_8w_arr_2 = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1];
-    //     let mux_16_8w_arr_1 = [0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
-    //     let mux_16_8w_arr_2 = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1];
-    //     let mux_16_8w_arr_1 = [0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
-    //     let mux_16_8w_arr_2 = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1];
-    //     let mux_16_8w_arr_1 = [0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
-    //     let mux_16_8w_arr_2 = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1];
-    //     let mux_16_8w_arr_1 = [0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
-    //     let mux_16_8w_arr_2 = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1];
-    //     let out = [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
-    // }
+    #[test]
+    fn test_mux_16_8w() {
+        let mux_16_8w_arr_1 = [0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
+        let mux_16_8w_arr_2 = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1];
+        let mux_16_8w_arr_3 = [0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
+        let mux_16_8w_arr_4 = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1];
+        let mux_16_8w_arr_4 = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1];
+        let mux_16_8w_arr_5 = [0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
+        let mux_16_8w_arr_6 = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1];
+        let mux_16_8w_arr_7 = [0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
+        let mux_16_8w_arr_8 = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1];
+        
+        assert_eq!(mux_16_8w(mux_16_8w_arr_1, 
+                             mux_16_8w_arr_2, 
+                             mux_16_8w_arr_3, 
+                             mux_16_8w_arr_4, 
+                             mux_16_8w_arr_5, 
+                             mux_16_8w_arr_6, 
+                             mux_16_8w_arr_7, 
+                             mux_16_8w_arr_8, 
+                             [0, 0, 0]), mux_16_8w_arr_1);
+        assert_eq!(mux_16_8w(mux_16_8w_arr_1, 
+                            mux_16_8w_arr_2, 
+                            mux_16_8w_arr_3, 
+                            mux_16_8w_arr_4, 
+                            mux_16_8w_arr_5, 
+                            mux_16_8w_arr_6, 
+                            mux_16_8w_arr_7, 
+                            mux_16_8w_arr_8,  
+                            [0, 0, 1]), mux_16_8w_arr_2);
+        assert_eq!(mux_16_8w(mux_16_8w_arr_1, 
+                            mux_16_8w_arr_2, 
+                            mux_16_8w_arr_3, 
+                            mux_16_8w_arr_4, 
+                            mux_16_8w_arr_5, 
+                            mux_16_8w_arr_6, 
+                            mux_16_8w_arr_7, 
+                            mux_16_8w_arr_8,  
+                            [0, 1, 0]), mux_16_8w_arr_3);
+        assert_eq!(mux_16_8w(mux_16_8w_arr_1, 
+                            mux_16_8w_arr_2, 
+                            mux_16_8w_arr_3, 
+                            mux_16_8w_arr_4, 
+                            mux_16_8w_arr_5, 
+                            mux_16_8w_arr_6, 
+                            mux_16_8w_arr_7, 
+                            mux_16_8w_arr_8,  
+                            [0, 1, 1]), mux_16_8w_arr_4);
+        assert_eq!(mux_16_8w(mux_16_8w_arr_1, 
+                            mux_16_8w_arr_2, 
+                            mux_16_8w_arr_3, 
+                            mux_16_8w_arr_4, 
+                            mux_16_8w_arr_5, 
+                            mux_16_8w_arr_6, 
+                            mux_16_8w_arr_7, 
+                            mux_16_8w_arr_8, 
+                            [1, 0, 0]), mux_16_8w_arr_5);
+        assert_eq!(mux_16_8w(mux_16_8w_arr_1, 
+                            mux_16_8w_arr_2, 
+                            mux_16_8w_arr_3, 
+                            mux_16_8w_arr_4, 
+                            mux_16_8w_arr_5, 
+                            mux_16_8w_arr_6, 
+                            mux_16_8w_arr_7, 
+                            mux_16_8w_arr_8, 
+                            [1, 0, 1]), mux_16_8w_arr_6);
+        assert_eq!(mux_16_8w(mux_16_8w_arr_1, 
+                            mux_16_8w_arr_2, 
+                            mux_16_8w_arr_3, 
+                            mux_16_8w_arr_4, 
+                            mux_16_8w_arr_5, 
+                            mux_16_8w_arr_6, 
+                            mux_16_8w_arr_7, 
+                            mux_16_8w_arr_8, 
+                            [1, 1, 0]), mux_16_8w_arr_7);
+        assert_eq!(mux_16_8w(mux_16_8w_arr_1, 
+                            mux_16_8w_arr_2, 
+                            mux_16_8w_arr_3, 
+                            mux_16_8w_arr_4, 
+                            mux_16_8w_arr_5, 
+                            mux_16_8w_arr_6, 
+                            mux_16_8w_arr_7, 
+                            mux_16_8w_arr_8, 
+                            [1, 1, 1]), mux_16_8w_arr_8);
+    }
     // #[test]
     // fn test_dmux_4w() {
     //     let sel: [i32;2] = [0, 1];

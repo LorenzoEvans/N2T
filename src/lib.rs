@@ -20,14 +20,15 @@ pub fn not(x: i32) -> i32 {
     else { return 1 }
 }
 
-pub fn not_16(array: &mut [i32; 16]) -> &mut [i32; 16] {
+pub fn not_16(array: [i32; 16]) -> [i32; 16] {
+    let mut out: [i32; 16] = [1;16];
     if array.len() > 15 {
         println!("You may lose {} bits from this {} bit array!", (array.len() - 15), array.len());
     }
-    for i in 1..15 {
-        array[i] = not(array[i]) 
+    for i in 0..16 {
+        out[i] = not(array[i]) 
     }
-    return array
+    return out
 }
 
 pub fn and(x: i32, y: i32) -> i32 {
@@ -246,7 +247,7 @@ pub fn dmux_4w(in_bit: i32, sel: [i32;2]) -> (i32, i32, i32, i32) {
     }
 }
 pub fn dmux_8w(in_bit: i32, sel: [i32;3]) -> (i32, i32, i32, i32, i32, i32, i32, i32,) {
-    let out_bits: (i32, i32, i32, i32, i32, i32, i32, i32, ) = (0, 0, 0, 0, 0, 0, 0, 0, ) ;
+    let out_bits: (i32, i32, i32, i32, i32, i32, i32, i32, ) = (0, 0, 0, 0, 0, 0, 0, 0,) ;
     let (sel_1, sel_2, sel_3) = (sel[0], sel[1], sel[2]);
     if sel_1 == 0 && sel_2 == 0 && sel_3 == 0 { // 000 // 0
         let a = in_bit;
@@ -254,7 +255,7 @@ pub fn dmux_8w(in_bit: i32, sel: [i32;3]) -> (i32, i32, i32, i32, i32, i32, i32,
         return (a, b, c, d, e, f, g, h)
 
     }
-    if sel_1 == 0 && sel_2 == 1 && sel_3 == 0 { // 001 // 1
+    if sel_1 == 0 && sel_2 == 0 && sel_3 == 1 { // 001 // 1
         let b = in_bit;
         let (a, _, c, d, e, f, g, h) = out_bits;
         return (a, b, c, d, e, f, g, h)

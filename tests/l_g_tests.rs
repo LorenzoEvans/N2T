@@ -256,13 +256,46 @@ mod l_g_tests {
     }
     #[test]
     fn test_dmux_4w() {
-        let sel: [i32;2] = [0, 1];
-        let (sel_1, sel_2) = (sel[0], sel[1]);
+        assert_eq!(dmux_4w(0, [0, 0]), (0, 0, 0, 0));
+        assert_eq!(dmux_4w(1, [0, 0]), (1, 0, 0, 0));
+
+        assert_eq!(dmux_4w(0, [0, 1]), (0, 0, 0, 0));
+        assert_eq!(dmux_4w(1, [0, 1]), (0, 1, 0, 0));
+
+        assert_eq!(dmux_4w(0, [1, 0]), (0, 0, 0, 0));
+        assert_eq!(dmux_4w(1, [1, 0]), (0, 0, 1, 0));
+        
+        assert_eq!(dmux_4w(0, [1, 1]), (0, 0, 0, 0));
+        assert_eq!(dmux_4w(1, [1, 1]), (0, 0, 0, 1));
     }
-    // #[test]
-    // fn test_dmux_8w() {
-    //     let out = [1, 0, 1, 0, 1, 0, 1, 0,];
-    // }
+    #[test]
+    fn test_dmux_8w() {
+        let out = [1, 0, 1, 0, 1, 0, 1, 0,];
+
+        assert_eq!(dmux_8w(0, [0, 0, 0]), (0, 0, 0, 0, 0, 0, 0, 0,));
+        assert_eq!(dmux_8w(1, [0, 0, 0]), (1, 0, 0, 0, 0, 0, 0, 0,));
+        
+        assert_eq!(dmux_8w(0, [0, 0, 1]), (0, 0, 0, 0, 0, 0, 0, 0,));
+        assert_eq!(dmux_8w(1, [0, 0, 1]), (0, 1, 0, 0, 0, 0, 0, 0,));
+
+        assert_eq!(dmux_8w(0, [0, 1, 0]), (0, 0, 0, 0, 0, 0, 0, 0,));
+        assert_eq!(dmux_8w(1, [0, 1, 0]), (0, 0, 1, 0, 0, 0, 0, 0,));
+
+        assert_eq!(dmux_8w(0, [0, 1, 1]), (0, 0, 0, 0, 0, 0, 0, 0,));
+        assert_eq!(dmux_8w(1, [0, 1, 1]), (0, 0, 0, 1, 0, 0, 0, 0,));
+
+        assert_eq!(dmux_8w(0, [1, 0, 0]), (0, 0, 0, 0, 0, 0, 0, 0,));
+        assert_eq!(dmux_8w(1, [1, 0, 0]), (0, 0, 0, 0, 1, 0, 0, 0,));
+
+        assert_eq!(dmux_8w(0, [1, 0, 1]), (0, 0, 0, 0, 0, 0, 0, 0,));
+        assert_eq!(dmux_8w(1, [1, 0, 1]), (0, 0, 0, 0, 0, 1, 0, 0,));
+
+        assert_eq!(dmux_8w(0, [1, 1, 0]), (0, 0, 0, 0, 0, 0, 0, 0,));
+        assert_eq!(dmux_8w(1, [1, 1, 0]), (0, 0, 0, 0, 0, 0, 1, 0,));
+
+        assert_eq!(dmux_8w(0, [1, 1, 1]), (0, 0, 0, 0, 0, 0, 0, 0,));
+        assert_eq!(dmux_8w(1, [1, 1, 1]), (0, 0, 0, 0, 0, 0, 0, 1,));
+    }
     fn test_not() {
         let not_1 = not(1);
         let not_2 = not(0);
@@ -270,9 +303,12 @@ mod l_g_tests {
         assert_eq!(not_1, 0);
         assert_eq!(not_2, 1);
     }
-    // #[test]
-    // fn test_not_16() {
-    //     let not_16_arr_1 = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1];
-    // }
+    #[test]
+    fn test_not_16() {
+        let not_16_arr_1 = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1];
+        let expected_out = [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
+        
+        assert_eq!(not_16(not_16_arr_1), expected_out);
+    }
 
 }

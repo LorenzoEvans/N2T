@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod l_g_tests {
-    use nand2_tetris::{
+    use nand2_tetris::l_g::l_g::{
         nand, // tested
         or_nand, // tested
         and, // tested

@@ -1,11 +1,12 @@
 // use crate::l_g::{and, or_nand, or_8w};
+use nand2_tetris::l_g::l_g::{mux_16_4w};
 fn main() {
           let mux_16_4w_arr_1 = [0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
         let mux_16_4w_arr_2 = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1];
         let mux_16_4w_arr_3 = [0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
         let mux_16_4w_arr_4 = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1];
         let out = [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
-        println!("Mux164w: {:?}", nand2_tetris::mux_16_4w(mux_16_4w_arr_1, 
+        println!("Mux164w: {:?}", nand2_tetris::l_g::l_g::mux_16_4w(mux_16_4w_arr_1, 
                                             mux_16_4w_arr_2, 
                                             mux_16_4w_arr_3, 
                                             mux_16_4w_arr_4, 

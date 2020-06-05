@@ -98,21 +98,7 @@ pub fn or_8w(array_a: [i32; 4], array_b: [i32;4]) -> [i32; 4] {
     for i in 0..4 {
         out[i] = or(array_a[i], array_b[i])
     }
-    // for i in 0..3 {
-    //     let x = array[i];
-    //     let y = array[i + 1];
-    //     while array[i + 1] {
-    //         let out_bit = or(x, y);
-    //         out[i] = &out_bit
-    //     }
-    //     // if i + 1 > array.len() {
-    //     //     return *out
-    //     // } else {out[i] = or(x, y);}
-    // }
-    // // while j > array.len() {
-    // //     out[i] = or(array[i], array[j]);
-    // //     i = i + 1;
-    // // }
+
     return out
 }
 pub fn mux(x: i32, y: i32, sel: i32) -> i32 {
@@ -125,7 +111,7 @@ pub fn mux(x: i32, y: i32, sel: i32) -> i32 {
 pub fn mux_16(array_a: [i32; 16], array_b: [i32; 16], sel: i32) -> [i32;16] {
     let mut out: [i32; 16] = [1; 16];
     for i in 0..15 {
-        out[i] = mux(array_a[i], array_a[i], sel);
+        out[i] = mux(array_a[i], array_b[i], sel);
     }
     return out
 }

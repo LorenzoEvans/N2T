@@ -107,19 +107,31 @@ mod l_g_tests {
     fn test_or_8w() {
         let or_8w_arr_1 = [0, 0, 0, 0];
         let or_8w_arr_2 = [ 1, 1, 0, 0];
-        let or_8w_out = [1, 1, 0, 0]
+        let or_8w_out = [1, 1, 0, 0];
 
-        assert_eq!(or_8w(or_8w_arr_1, or_8w_arr_2))
+        assert_eq!(or_8w(or_8w_arr_1, or_8w_arr_2), or_8w_out);
     }
     #[test]
     fn test_mux() {
+        let sel = [0, 1];
+        let sel_1 = sel[0];
+        let sel_2 = sel[1];
+        let sel_input = [0, 1];
+        let sel_out_1 = sel[0];
+        let sel_out_2 = sel[1];
 
+        assert_eq!(mux(sel_input[0], sel_input[1], sel_1), sel_out_1);
+        assert_eq!(mux(sel_input[0], sel_input[1], sel_2), sel_out_2);
     }
     #[test]
     fn test_mux_16() {
-        let mux_16_arr_1 = [0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
+        let mux_16_arr_1 = [0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1];
         let mux_16_arr_2 = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1];
-        let out = [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
+        let expected_out_0 = [0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1];
+        let expected_out_1 = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1];
+
+        assert_eq!(mux_16(mux_16_arr_1, mux_16_arr_2, 0), expected_out_0);
+        assert_eq!(mux_16(mux_16_arr_1, mux_16_arr_2, 1), expected_out_1);
     }
     #[test]
     fn test_mux_16_4w() {

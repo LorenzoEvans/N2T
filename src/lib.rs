@@ -63,7 +63,7 @@ pub fn or(x: i32, y: i32) -> i32 {
 }
 
 pub fn or_16(array_a: [i32; 16], array_b: [i32; 16], out: &mut [i32; 16]) -> [i32; 16] {
-    for i in 0..15 {
+    for i in 0..16 {
         out[i] = or(array_a[i], array_b[i]);
     }
     return *out
@@ -110,7 +110,7 @@ pub fn mux(x: i32, y: i32, sel: i32) -> i32 {
 
 pub fn mux_16(array_a: [i32; 16], array_b: [i32; 16], sel: i32) -> [i32;16] {
     let mut out: [i32; 16] = [1; 16];
-    for i in 0..15 {
+    for i in 0..16 {
         out[i] = mux(array_a[i], array_b[i], sel);
     }
     return out
@@ -123,22 +123,22 @@ pub fn mux_16_4w(array_a: [i32; 16], array_b: [i32; 16], array_c: [i32; 16], arr
     let sel_1 = sel[0];
     let sel_2 = sel[1];
     if sel_1 == 0 && sel_2 == 0 {
-        for i in 0..15 {
+        for i in 0..16 {
             out[i] = array_a[i]
         }
     }
     else if sel_1 == 1 && sel_2 == 1 {
-        for i in 0..15 {
+        for i in 0..16 {
             out[i] = array_d[i]
         }
     }
     else if sel_1 == 1 && sel_2 == 0 {
-        for i in 0..15 {
+        for i in 0..16 {
             out[i] = array_c[i]
         }
     }
     else {
-        for i in 0..15 {
+        for i in 0..16 {
             out[i] = array_b[i]
         }
     }
@@ -162,42 +162,42 @@ pub fn mux_16_8w(
     let sel_2 = sel[1];
     let sel_3 = sel[2];
     if sel_1 == 0 && sel_2 == 0 && sel_3 == 0 { // 000
-        for i in 0..15 {
+        for i in 0..16 {
             out[i] = array_a[i]
         }
     }
     else if sel_1 == 0 && sel_2 == 0 && sel_3 == 1 { // 001
-        for i in 0..15 {
+        for i in 0..16 {
             out[i] = array_b[i]
         }
     }
     else if sel_1 == 0 && sel_2 == 1 && sel_3 == 0 { // 010
-        for i in 0..15 {
+        for i in 0..16 {
             out[i] = array_c[i]
         }
     }
     else if sel_1 == 0 && sel_2 == 1 && sel_3 == 1 { // 011
-        for i in 0..15 {
+        for i in 0..16 {
             out[i] = array_d[i]
         }
     }
     else if sel_1 == 1 && sel_2 == 0 && sel_3 == 0 { // 100
-        for i in 0..15 {
+        for i in 0..16 {
             out[i] = array_e[i]
         }
     }
     else if sel_1 == 1 && sel_2 == 0 && sel_3 == 1 { // 101
-        for i in 0..15 { 
+        for i in 0..16 { 
             out[i] = array_f[i]
         }
     }
     else if sel_1 == 1 && sel_2 == 1 && sel_3 == 0 { // 110
-        for i in 0..15 { 
+        for i in 0..16 { 
             out[i] = array_g[i]
         }
     }
     else { // 111 the only possible combo left, so else block
-        for i in 0..15 {
+        for i in 0..16 {
             out[i] = array_h[i]
         }
     }

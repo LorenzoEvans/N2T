@@ -12,6 +12,7 @@ mod l_g_tests {
         mux_16,
         mux_16_4w,
         mux_16_8w,
+        dmux,
         dmux_4w,
         dmux_8w,
         xor,
@@ -246,11 +247,18 @@ mod l_g_tests {
                             mux_16_8w_arr_8, 
                             [1, 1, 1]), mux_16_8w_arr_8);
     }
-    // #[test]
-    // fn test_dmux_4w() {
-    //     let sel: [i32;2] = [0, 1];
-    //     let (sel_1, sel_2) = (sel[0], sel[1]);
-    // }
+    #[test]
+    fn test_dmux() {
+        assert_eq!(dmux(0, 0), (0, 0));
+        assert_eq!(dmux(1, 0), (1, 0));
+        assert_eq!(dmux(0, 1), (0, 0));
+        assert_eq!(dmux(1, 1), (0, 1));
+    }
+    #[test]
+    fn test_dmux_4w() {
+        let sel: [i32;2] = [0, 1];
+        let (sel_1, sel_2) = (sel[0], sel[1]);
+    }
     // #[test]
     // fn test_dmux_8w() {
     //     let out = [1, 0, 1, 0, 1, 0, 1, 0,];

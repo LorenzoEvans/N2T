@@ -99,4 +99,39 @@ pub mod adders {
         return out
     }
 
+    pub fn inc_16 (in_arr: [i32; 16]) -> [i32;16] {
+        let mut out: [i32; 16] = [1; 16];
+        for i in 0..16 {
+            out[i] = in_arr[i] + 1
+        }
+
+        return out
+    }
+
+    struct ALU {
+        // We instruct the ALU on which function to compute, by setting
+        // six input bits, called control bits, to selected binary values.
+
+        // Each control but instructs the ALU to carry out a function.
+
+        // 6 operations => 2^6 = 64 possible function outputs.
+
+        // So, let's take the function (x - 1):
+            // The control bit sequence for this is: [0|0|1|1|1|0]
+        // Because the zx, and nx bits ([0|0...]) are set to zero,
+        // the x input is neither z
+        x: Vec<i32>, // 16 bit data inputs
+        y: Vec<i32>, // 16 bit data inputs 
+        // These bits toggle the x input
+        zx: i32, // Zero x input
+        nx: i32, // Negate x input
+        // These bits toggle the y input
+        zy: i32, // Zero y input
+        ny: i32, // Negate x input
+        // This toggles between And/Add
+        f: i32, 
+        // This bit instructs out to set out.
+        no: i32,
+    }
+
 }

@@ -110,23 +110,19 @@ pub mod adders {
     }
 
     struct ControlBit(i32, i32);
-
+    #[derive(Debug, Clone)]
     struct ALU {
         // **** By using Cell<T>, you can emulate field-level mutability. ****
         // We instruct the ALU on which function to compute, by setting
         // six input bits, called control bits, to selected binary values.
-
         // Each control but instructs the ALU to carry out a function.
-
         // 6 operations => 2^6 = 64 possible function outputs.
-
         // So, let's take the function (x - 1):
             // The control bit sequence for this is: [0|0|1|1|1|0]
         // Because the zx, and nx bits ([0|0...]) are set to zero,
         // the x input is neither zeroed, nor negated.
         // The zy, and ny bits are both 1, so the y input is zeroed,
         // then negated bitwise.
-
         x: Option<Cell<Vec<i32>>>, // 16 bit data inputs
         y: Option<Cell<Vec<i32>>>, // 16 bit data inputs 
         // These bits toggle the x input
@@ -167,6 +163,7 @@ pub mod adders {
             let mut y_vec = x_vec.clone();            
             if zx == 1 {
                 let x: ALU = Default::default();
+                print!("ALU: {:?}", x);
             }
         }
     }

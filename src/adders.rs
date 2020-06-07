@@ -151,8 +151,8 @@ pub mod adders {
                 f: i32,
                 no: i32) -> ALU {
                 ALU {    
-                    x: Some(Vec::<i32>),
-                    y: Some(Vec::<i32>),
+                    x: Some(Cell::new(x)),
+                    y: Some(Cell::new(y)),
                     zx: Some(Cell::new(zx)),
                     nx: Some(Cell::new(nx)),
                     zy: Some(Cell::new(zy)),

@@ -151,8 +151,8 @@ pub mod adders {
                 f: i32,
                 no: i32) -> ALU {
                 ALU {    
-                    x: Vec::<i32>,
-                    y: Vec::<i32>,
+                    x: Some(Vec::<i32>),
+                    y: Some(Vec::<i32>),
                     zx: Some(Cell::new(zx)),
                     nx: Some(Cell::new(nx)),
                     zy: Some(Cell::new(zy)),
@@ -162,9 +162,16 @@ pub mod adders {
                 }
             }
         fn z_x(&self, zx: i32, x: [i32;16] ) {
+            let mut x_vec = Vec::new();
+
+            for i in 0..16 {
+                x_vec.push(0)
+            }
+
+            let y_vec = x_vec.clone();
+            
             if zx == 1 {
-                let x = ALU { x: [0,0,0,0,0,0,0,0],
-                            y: [0,0,0,0,0,0,0,0]};
+                let x = ALU::{ x: Cell<Some(x_vec)>, y: Cell<Some(y_vec)>};
             }
         }
     }

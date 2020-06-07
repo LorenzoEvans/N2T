@@ -163,28 +163,18 @@ pub mod adders {
             }
         fn z_x(&self, zx: i32, x: [i32;16] ) {
             let mut x_vec = Vec::new();
-
-            for i in 0..16 {
-                x_vec.push(0)
-            }
-
-            let y_vec = x_vec.clone();
-            
+            for i in 0..16 {x_vec.push(0)}
+            let mut y_vec = x_vec.clone();            
             if zx == 1 {
-                // let x = ALU::{ x: Cell<Some(x_vec)>, y: Cell<Some(y_vec)>};
+                let x: ALU = Default::default();
             }
         }
     }
 
     impl Default for ALU {
-        //
         fn default() -> ALU {
             let mut x_vec = Vec::new();
-            
-            for i in 0..16 {
-                x_vec.push(0)
-            }
-            
+            for i in 0..16 {x_vec.push(0)}
             let mut y_vec = x_vec.clone();
             
             ALU {

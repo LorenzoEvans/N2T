@@ -171,7 +171,7 @@ pub mod adders {
             let y_vec = x_vec.clone();
             
             if zx == 1 {
-                let x = ALU::{ x: Cell<Some(x_vec)>, y: Cell<Some(y_vec)>};
+                // let x = ALU::{ x: Cell<Some(x_vec)>, y: Cell<Some(y_vec)>};
             }
         }
     }

@@ -110,7 +110,7 @@ pub mod adders {
     }
 
     struct ControlBit(i32, i32);
-    #[derive(Default)]
+
     struct ALU {
         // **** By using Cell<T>, you can emulate field-level mutability. ****
         // We instruct the ALU on which function to compute, by setting
@@ -142,49 +142,53 @@ pub mod adders {
     }
 
     impl ALU {
-        fn new(x: Vec<i23>,
-                y: Vec<i23>,
+        fn new(x: Vec<i32>,
+                y: Vec<i32>,
                 zx: i32,
                 nx: i32,
                 zy: i32,
                 ny: i32,
                 f: i32,
-                no: i32) -> {
+                no: i32) -> ALU {
                 ALU {    
-                    x: Vec<i23>,
-                    y: Vec<i23>,
-                    zx: Some(zx),
-                    nx: Some(nx),
-                    zy: Some(zy),
-                    ny: Some(ny),
-                    f:  Some(f),
-                    no: Some(no)
+                    x: Vec::<i32>,
+                    y: Vec::<i32>,
+                    zx: Some(Cell::new(zx)),
+                    nx: Some(Cell::new(nx)),
+                    zy: Some(Cell::new(zy)),
+                    ny: Some(Cell::new(ny)),
+                    f:  Some(Cell::new(f)),
+                    no: Some(Cell::new(no))
                 }
-                }
+            }
         fn z_x(&self, zx: i32, x: [i32;16] ) {
             if zx == 1 {
-                let x = ALU { x: [i32;16] = [1;16],
-                            y: [i32;16] = [1;16]}
+                let x = ALU { x: [0,0,0,0,0,0,0,0],
+                            y: [0,0,0,0,0,0,0,0]};
             }
         }
     }
 
     impl Default for ALU {
+        //
         fn default() -> ALU {
-            let mut x_vec == Vec::new();
-            for i in range 0..16 {
+            let mut x_vec = Vec::new();
+            
+            for i in 0..16 {
                 x_vec.push(0)
             }
+            
             let mut y_vec = x_vec.clone();
+            
             ALU {
-                x: x_vec,
-                y: y_vec,
-                zx: Some(0),
-                nx: Some(0),
-                zy: Some(0),
-                ny: Some(0),
-                f:  Some(0) ,
-                no: Some(0),
+                x: Some(Cell::new(x_vec)),
+                y: Some(Cell::new(y_vec)),
+                zx: Some(Cell::new(0)),
+                nx: Some(Cell::new(0)),
+                zy: Some(Cell::new(0)),
+                ny: Some(Cell::new(0)),
+                f:  Some(Cell::new(0)),
+                no: Some(Cell::new(0)),
             }
         }
     }

@@ -109,9 +109,8 @@ pub mod adders {
         return out
     }
 
-    struct ControlBit(i32, i32);
     #[derive(Debug, Clone)]
-    struct ALU {
+    pub struct ALU {
         // **** By using Cell<T>, you can emulate field-level mutability. ****
         // We instruct the ALU on which function to compute, by setting
         // six input bits, called control bits, to selected binary values.
@@ -123,18 +122,18 @@ pub mod adders {
         // the x input is neither zeroed, nor negated.
         // The zy, and ny bits are both 1, so the y input is zeroed,
         // then negated bitwise.
-        x: Option<Cell<Vec<i32>>>, // 16 bit data inputs
-        y: Option<Cell<Vec<i32>>>, // 16 bit data inputs 
+        pub x: Vec<i32>, // 16 bit data inputs
+        y: Vec<i32>, // 16 bit data inputs 
         // These bits toggle the x input
-        zx: Option<Cell<i32>>, // Zero x input
-        nx: Option<Cell<i32>>, // Negate x input
+        pub zx: i32, // Zero x input
+        nx: i32, // Negate x input
         // These bits toggle the y input
-        zy: Option<Cell<i32>>, // Zero y input
-        ny: Option<Cell<i32>>, // Negate x input
+        zy: i32, // Zero y input
+        ny: i32, // Negate x input
         // This toggles between And/Add
-        f: Option<Cell<i32>>, 
+        f: i32, 
         // This bit instructs out to set out.
-        no: Option<Cell<i32>>, // negate output
+        no: i32, // negate output
     }
 
     impl ALU {
@@ -147,14 +146,14 @@ pub mod adders {
                 f: i32,
                 no: i32) -> ALU {
                 ALU {    
-                    x: Some(Cell::new(x)),
-                    y: Some(Cell::new(y)),
-                    zx: Some(Cell::new(zx)),
-                    nx: Some(Cell::new(nx)),
-                    zy: Some(Cell::new(zy)),
-                    ny: Some(Cell::new(ny)),
-                    f:  Some(Cell::new(f)),
-                    no: Some(Cell::new(no))
+                    x: x,
+                    y: y,
+                    zx: zx,
+                    nx: nx,
+                    zy: zy,
+                    ny: ny,
+                    f:  f,
+                    no: no
                 }
             }
         fn z_x(&self, zx: i32, x: [i32;16] ) {
@@ -167,7 +166,6 @@ pub mod adders {
             }
         }
     }
-
     impl Default for ALU {
         fn default() -> ALU {
             let mut x_vec = Vec::new();
@@ -175,17 +173,18 @@ pub mod adders {
             let mut y_vec = x_vec.clone();
             
             ALU {
-                x: Some(Cell::new(x_vec)),
-                y: Some(Cell::new(y_vec)),
-                zx: Some(Cell::new(0)),
-                nx: Some(Cell::new(0)),
-                zy: Some(Cell::new(0)),
-                ny: Some(Cell::new(0)),
-                f:  Some(Cell::new(0)),
-                no: Some(Cell::new(0)),
+                x: x_vec,
+                y: y_vec,
+                zx: 0,
+                nx: 0,
+                zy: 0,
+                ny: 0,
+                f:  0,
+                no: 0,
             }
         }
     }
+
 
 }
 

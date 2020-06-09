@@ -58,6 +58,9 @@ pub mod adders {
     ///
     /// Values will be returned in a tuple, as (carry, sum) respectively.
     pub fn full_adder(a: i32, b: i32, c: i32) -> (i32, i32) {
+        // We have to re-write this.
+        // We should just conver the bin_2_dec py func
+
         if a == 0 && b == 0 && c == 0  {
             return (0, 0)
         }
@@ -90,12 +93,25 @@ pub mod adders {
 
     }
 
-    pub fn add_16(array_a: [i32; 16], array_b: [i32; 16]) -> [i32;16] {
+    pub fn add_16(array_a: [i32; 16], array_b: [i32; 16]) {
         let mut out: [i32; 16] = [1; 16];
-
+        let mut carry = 0;
         for i in 0..16 {
-            out[i] = half_adder(array_a[i], array_b[i]).1
+            if array_a[i] + array_b[i] == 2 {
+                carry = 1;
+                out[i] = full_adder(array_a[i], array_b[i], carry);
+
+            }
+            else if array_a[i] + array_b[i] == 1 {
+                carry = 0;
+                out[i] = full_adder(array_a[i], array_b[i], carry);
+            }
+            else {
+                carry = 0;
+                out[i] = full_adder(array_a[i], array_b[i], carry);
+            }
         }
+
 
         return out
     }
@@ -187,4 +203,6 @@ pub mod adders {
 
 
 }
+
+
 

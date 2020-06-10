@@ -60,7 +60,7 @@ pub mod adders {
     /// Values will be returned in a tuple, as (carry, sum) respectively.
     pub fn full_adder(a: i32, b: i32, c: i32) -> (i32, i32) {
         // We have to re-write this.
-        // We should just conver the bin_2_dec py func
+        // Update: we don't, if a HOF can use it properly. ^_-
 
         if a == 0 && b == 0 && c == 0  {
             return (0, 0)
@@ -95,36 +95,41 @@ pub mod adders {
     }
 
     pub fn add_16(array_a: [i32; 16], array_b: [i32; 16]) -> Vec<i32> {
+        // We can generate the bitwise addition and the carries,
+        // the problem is how to fold those carries back into the string of
+        // bits efficiently,
         let mut out = Vec::new();
         let mut carry = 0;
         let mut result: Vec<i32> = Vec::new();
         for i in 0..16 {
+
             if array_a[i] + array_b[i] == 2 {
                 carry = 1;
-                out.push(full_adder(array_a[i], array_b[i], carry));
+                out.push(full_adder(array_a[i], array_b[i], carry).1);
 
             }
             else if array_a[i] + array_b[i] == 1 {
                 carry = 0;
-                out.push(full_adder(array_a[i], array_b[i], carry));
+                out.push(full_adder(array_a[i], array_b[i], carry).1);
             }
             else {
                 carry = 0;
-                out.push(full_adder(array_a[i], array_b[i], carry));
+                out.push(full_adder(array_a[i], array_b[i], carry).1);
             }
         }
 
-        for i in 0..16 {
-            match out[i] {
-                (0, 0) => result.push(not(0)),
-                (0, 1) => result.push(not(1)),
-                (1, 0) => result.push(not(0)),
-                (1, 1) => result.push(not(1)),
-                _ => println!("Not important")
-            }
-        }
+        // for i in 0..16 {
+        //     match out[i] {
+        //         (0, 0) => result.push(0),
+        //         (0, 1) => result.push(1),
+        //         (1, 0) => result.push(0), <= This is problematic. We have a carry but no sum to push.
+                                            //  Perhaps result[i - 1], if it's valid Rust. I kind of doubt it.
+        //         (1, 1) => result.push(1), // <= So is this, for similar reasons.
+        //         _ => println!("Not important")
+        //     }
+        // }
 
-        return result
+        return out
     }
 
     pub fn inc_16 (in_arr: [i32; 16]) -> [i32;16] {

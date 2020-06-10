@@ -1,6 +1,7 @@
 pub mod adders {
     use std::cell::Cell;
     use std::option::Option;
+    use crate::l_g::l_g::{not};
     /// Adds two bits, where the least significant bit of the addition is 
     /// called sum, and the most significant bit is called carry.
     ///
@@ -93,27 +94,37 @@ pub mod adders {
 
     }
 
-    pub fn add_16(array_a: [i32; 16], array_b: [i32; 16]) {
-        let mut out: [i32; 16] = [1; 16];
+    pub fn add_16(array_a: [i32; 16], array_b: [i32; 16]) -> Vec<i32> {
+        let mut out = Vec::new();
         let mut carry = 0;
+        let mut result: Vec<i32> = Vec::new();
         for i in 0..16 {
             if array_a[i] + array_b[i] == 2 {
                 carry = 1;
-                out[i] = full_adder(array_a[i], array_b[i], carry);
+                out.push(full_adder(array_a[i], array_b[i], carry));
 
             }
             else if array_a[i] + array_b[i] == 1 {
                 carry = 0;
-                out[i] = full_adder(array_a[i], array_b[i], carry);
+                out.push(full_adder(array_a[i], array_b[i], carry));
             }
             else {
                 carry = 0;
-                out[i] = full_adder(array_a[i], array_b[i], carry);
+                out.push(full_adder(array_a[i], array_b[i], carry));
             }
         }
 
+        for i in 0..16 {
+            match out[i] {
+                (0, 0) => result.push(not(0)),
+                (0, 1) => result.push(not(1)),
+                (1, 0) => result.push(not(0)),
+                (1, 1) => result.push(not(1)),
+                _ => println!("Not important")
+            }
+        }
 
-        return out
+        return result
     }
 
     pub fn inc_16 (in_arr: [i32; 16]) -> [i32;16] {

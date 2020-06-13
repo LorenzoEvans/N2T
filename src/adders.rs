@@ -171,12 +171,15 @@ pub mod adders {
         // the x input is neither zeroed, nor negated.
         // The zy, and ny bits are both 1, so the y input is zeroed,
         // then negated bitwise.
-        pub x: Vec<i32>, // 16 bit data inputs
-        pub y: Vec<i32>, // 16 bit data inputs 
+        // The Control bits, and their boolean value,
+        // Have to map onto the expected selector bit values.
+        pub x: [i32;16], // 16 bit data inputs
+        pub y: [i32;16], // 16 bit data inputs 
         // These bits toggle the x input
         pub zx: i32, // Zero x input
                      // mux 16 (a = x, b = [0..15]=false, sel=zx, out=zdx)
         pub nx: i32, // Negate x input
+                    // Not 16
         // These bits toggle the y input
         pub zy: i32, // Zero y input
         pub ny: i32, // Negate x input
@@ -187,8 +190,8 @@ pub mod adders {
     }
 
     impl ALU {
-        fn new(x: Vec<i32>, 
-                y: Vec<i32>,
+        fn new(x:  [i32;16], 
+                y: [i32;16],
                 zx: i32,
                 nx: i32,
                 zy: i32,
@@ -206,29 +209,31 @@ pub mod adders {
                     no: no
                 }
             }
-        fn z_x(&self, zx: i32, x: [i32;16] ) {
-            // if self.zx 
-                // mux16 self.zx
-            // else ..?
-            // let mut x_vec = Vec::new();
-            // for i in 0..16 {x_vec.push(0)}
-            // let mut y_vec = x_vec.clone();            
+        fn z_x(&self, zx: i32, x: [i32;16]) {
+            let mut y: [i32; 16] = [0; 16]
             if self.zx == 1 {
-                
-                // let x: ALU = Default::default();
-                // print!("ALU: {:?}", x);
+               self.x = mux_16(x, y, self.zx);
             }
         }
+
+        fn n_x(&self, nx: i32, x: [i32; 16]) {
+            if self.nx == 1 {
+                self.x = not_16(x);
+            }
+        }
+
+        fn z_y(&self, zy: i32, y: [i32;])
     }
     impl Default for ALU {
         fn default() -> ALU {
-            let mut x_vec = Vec::new();
-            for i in 0..16 {x_vec.push(0)}
-            let mut y_vec = x_vec.clone();
-            
+            // let mut x_vec = Vec::new();
+            // for i in 0..16 {x_vec.push(0)}
+            // let mut y_vec = x_vec.clone();
+            let x: [i32;16] = [0;16];
+            let y: [i32;16] = [0;16];
             ALU {
-                x: x_vec,
-                y: y_vec,
+                x: x,
+                y: y,
                 zx: 0,
                 nx: 0,
                 zy: 0,

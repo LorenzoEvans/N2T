@@ -1,7 +1,24 @@
 pub mod adders {
     use std::cell::Cell;
     use std::option::Option;
-    use crate::l_g::l_g::{not};
+    use crate::l_g::l_g::{nand,
+                          or_nand,
+                          and,
+                          and_16,
+                          or, 
+                          or_16,
+                          or_8w,
+                          mux,
+                          mux_16,
+                          mux_16_4w,
+                          mux_16_8w,
+                          dmux,
+                          dmux_4w,
+                          dmux_8w,
+                          xor,
+                          not,
+                          not_16
+    };
     /// Adds two bits, where the least significant bit of the addition is 
     /// called sum, and the most significant bit is called carry.
     ///
@@ -155,21 +172,22 @@ pub mod adders {
         // The zy, and ny bits are both 1, so the y input is zeroed,
         // then negated bitwise.
         pub x: Vec<i32>, // 16 bit data inputs
-        y: Vec<i32>, // 16 bit data inputs 
+        pub y: Vec<i32>, // 16 bit data inputs 
         // These bits toggle the x input
         pub zx: i32, // Zero x input
-        nx: i32, // Negate x input
+                     // mux 16 (a = x, b = [0..15]=false, sel=zx, out=zdx)
+        pub nx: i32, // Negate x input
         // These bits toggle the y input
-        zy: i32, // Zero y input
-        ny: i32, // Negate x input
+        pub zy: i32, // Zero y input
+        pub ny: i32, // Negate x input
         // This toggles between And/Add
-        f: i32, 
+        pub f: i32, 
         // This bit instructs out to set out.
-        no: i32, // negate output
+        pub no: i32, // negate output
     }
 
     impl ALU {
-        fn new(x: Vec<i32>,
+        fn new(x: Vec<i32>, 
                 y: Vec<i32>,
                 zx: i32,
                 nx: i32,
@@ -189,12 +207,16 @@ pub mod adders {
                 }
             }
         fn z_x(&self, zx: i32, x: [i32;16] ) {
-            let mut x_vec = Vec::new();
-            for i in 0..16 {x_vec.push(0)}
-            let mut y_vec = x_vec.clone();            
-            if zx == 1 {
-                let x: ALU = Default::default();
-                print!("ALU: {:?}", x);
+            // if self.zx 
+                // mux16 self.zx
+            // else ..?
+            // let mut x_vec = Vec::new();
+            // for i in 0..16 {x_vec.push(0)}
+            // let mut y_vec = x_vec.clone();            
+            if self.zx == 1 {
+                
+                // let x: ALU = Default::default();
+                // print!("ALU: {:?}", x);
             }
         }
     }

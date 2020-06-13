@@ -11,7 +11,8 @@ fn main() {
   let out = [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
   let mut alu = ALU::default();
   alu.zx = 3;
-  println!("add_16_arr_1: {:?}", add_16_arr_1);
-  println!("add_16_arr_2: {:?}", add_16_arr_2);
-  println!("add_16      :{:?}", add_16(add_16_arr_1, add_16_arr_2));
+  println!("add_16_arr_1: {:?}", alu.zx);
+  // println!("add_16_arr_1: {:?}", add_16_arr_1);
+  // println!("add_16_arr_2: {:?}", add_16_arr_2);
+  // println!("add_16      :{:?}", add_16(add_16_arr_1, add_16_arr_2));
 }

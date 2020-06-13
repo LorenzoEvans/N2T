@@ -4,22 +4,21 @@ mod l_g_tests {
         nand, // tested
         or_nand, // tested
         and, // tested
-        and_16,
+        and_16, // tested
         or, // tested
-        or_16,
-        or_8w,
-        mux,
-        mux_16,
-        mux_16_4w,
-        mux_16_8w,
-        dmux,
-        dmux_4w,
-        dmux_8w,
-        xor,
+        or_16, // tested
+        or_8w, // tested
+        mux, // tested
+        mux_16, // tested
+        mux_16_4w, // tested
+        mux_16_8w, // tested
+        dmux, // tested
+        dmux_4w, // tested
+        dmux_8w, // tested
+        xor, // tested
         not, // tested
-        not_16
+        not_16 // tested
     };
-    // let out = [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
     
     #[test]
     fn test_nand() {

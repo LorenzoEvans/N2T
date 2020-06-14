@@ -173,8 +173,8 @@ pub mod adders {
         // then negated bitwise.
         // The Control bits, and their boolean value,
         // Have to map onto the expected selector bit values.
-        pub x: [i32;16], // 16 bit data inputs
-        pub y: [i32;16], // 16 bit data inputs 
+        pub  x: [i32;16], // 16 bit data inputs
+        pub  y: [i32;16], // 16 bit data inputs 
         // These bits toggle the x input
         pub zx: i32, // Zero x input
                      // mux 16 (a = x, b = [0..15]=false, sel=zx, out=zdx)
@@ -209,20 +209,51 @@ pub mod adders {
                     no: no
                 }
             }
-        fn z_x(&self, zx: i32, x: [i32;16]) {
-            let mut y: [i32; 16] = [0; 16]
-            if self.zx == 1 {
-               self.x = mux_16(x, y, self.zx);
+        fn z_x(&mut self, x: [i32;16]) {
+            let mut y: [i32; 16] = [0; 16];
+            let mut op_done = false;
+            while op_done != true {
+                if 0i32 != self.zx {
+                    break;
+                }
+                else {
+                    self.x = mux_16(x, y, self.zx);
+                    op_done = true;
+                }
             }
         }
 
-        fn n_x(&self, nx: i32, x: [i32; 16]) {
-            if self.nx == 1 {
-                self.x = not_16(x);
+        fn n_x(&mut self, x: [i32; 16]) {
+            let mut op_done = false;
+            while op_done != true {
+                if 0i32 != self.zx {
+                    break;
+                }
+                else {self.x = not_16(x);}
             }
         }
 
-        fn z_y(&self, zy: i32, y: [i32;])
+        fn z_y(&mut self, y: [i32;16]) {
+            let mut x: [i32; 16] = [0; 16];
+            if 1i32 != self.zy {
+                break;
+            }
+            else {self.y = mux_16(x, y, self.zy);}
+        }
+        fn ny(&mut self, y: [i32; 16]) {
+            if 0i32 != self.ny {
+                break;
+            }
+            else { self.y = not_16(y);}
+        }
+        fn _f (&mut self) {
+            if 1i32 != self.f {
+                break;
+            }
+            else {}
+        }
+
+        // fn z_y(&self, zy: i32, y: [i32;16])
     }
     impl Default for ALU {
         fn default() -> ALU {

@@ -187,6 +187,7 @@ pub mod adders {
         pub f: i32, 
         // This bit instructs out to set out.
         pub no: i32, // negate output
+        pub otpt: [i32;16]
     }
 
     impl ALU {
@@ -229,28 +230,63 @@ pub mod adders {
                 if 0i32 != self.zx {
                     break;
                 }
-                else {self.x = not_16(x);}
+                else {
+                    self.x = not_16(x);
+                    op_done = true;
+                }
             }
         }
 
         fn z_y(&mut self, y: [i32;16]) {
-            let mut x: [i32; 16] = [0; 16];
-            if 1i32 != self.zy {
-                break;
+            let mut op_done = false;
+            while op_done != true {
+                let mut x: [i32; 16] = [0; 16];
+                if 1i32 != self.zy {
+                    break;
+                }
+                else {
+                    self.y = mux_16(x, y, self.zy);
+                    op_done = true;
+                }
             }
-            else {self.y = mux_16(x, y, self.zy);}
         }
         fn ny(&mut self, y: [i32; 16]) {
-            if 0i32 != self.ny {
-                break;
+            let mut op_done = false;
+            while op_done != true {
+                if 0i32 != self.ny {
+                    break;
+                }
+                else {
+                    self.y = not_16(y);
+                    op_done = true;
+                }
             }
-            else { self.y = not_16(y);}
         }
-        fn _f (&mut self) {
-            if 1i32 != self.f {
-                break;
+        fn _f (&mut self) -> [i32;16] {
+            let mut out: [i32;16] = [0;16];
+            if 1i32 == self.f {
+                for i in 0..16 {
+                    out[i] = full_adder(self.x[i], self.y[i]);
+                    self.otpt = out;
+                }
             }
-            else {}
+            else {
+                for i in 0..6 {
+                    out[i] = full_adder(self.x[i], self.y[i]);
+                    self.otpt = out;
+                }
+            }
+
+            let output = self.otpt;
+            return output
+
+        }
+        fn n_o (&mut self, output: [i32;16]) -> [i32;16] {
+            let mut out: [i32;16] = [0;16];
+            for i in 0..16 {
+                out[i] = not_16(output);
+                return out
+            }
         }
 
         // fn z_y(&self, zy: i32, y: [i32;16])

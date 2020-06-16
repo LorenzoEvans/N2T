@@ -1,4 +1,4 @@
-pub mod adders {
+pub mod ALU {
     use std::cell::Cell;
     use std::option::Option;
     use crate::l_g::l_g::{nand,
@@ -218,7 +218,9 @@ pub mod adders {
                     break;
                 }
                 else {
-                    self.x = mux_16(x, y, self.zx);
+                    for i in 0..16 {
+                        self.x[i] = 0;
+                    }
                     op_done = true;
                 }
             }
@@ -240,12 +242,13 @@ pub mod adders {
         fn z_y(&mut self, y: [i32;16]) {
             let mut op_done = false;
             while op_done != true {
-                let mut x: [i32; 16] = [0; 16];
                 if 1i32 != self.zy {
                     break;
                 }
                 else {
-                    self.y = mux_16(x, y, self.zy);
+                    for i in 0..16 {
+                        self.y[i] = 0;
+                    }
                     op_done = true;
                 }
             }
@@ -271,8 +274,8 @@ pub mod adders {
                 }
             }
             else {
-                for i in 0..6 {
-                    out[i] = full_adder(self.x[i], self.y[i]);
+                for i in 0..16 {
+                    out[i] = and(self.x[i], self.y[i]);
                     self.otpt = out;
                 }
             }
@@ -288,6 +291,24 @@ pub mod adders {
                 return out
             }
         }
+
+        fn z_o (&mut self) {
+            let mut z_b: [i32;16] = [0;16];
+            if self.otpt == z_b {
+                self.zr = 1;
+            } else {
+                self.zr = 0;
+            }
+        }
+
+        fn o_gt0 (&mut self) {
+            if self.otpt > 0 {
+                self.ng = 1;
+            } else {
+                self.ng = 0;
+            }
+        }
+
 
         // fn z_y(&self, zy: i32, y: [i32;16])
     }

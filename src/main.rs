@@ -1,4 +1,4 @@
-use nand2_tetris::adders::adders::{inc_16, ALU, add_16};
+use nand2_tetris::ALU::ALU{inc_16, ALU, add_16};
 #[allow(unused_variables)]
 fn main() {
   let mux_16_4w_arr_1 = [0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];

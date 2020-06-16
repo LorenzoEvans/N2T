@@ -19,25 +19,7 @@ pub mod ALU {
                           not,
                           not_16
     };
-    /// Adds two bits, where the least significant bit of the addition is 
-    /// called sum, and the most significant bit is called carry.
-    ///
-    /// #Examples
-    ///
-    /// ```
-    /// let a = 1;
-    /// let b = 1;
-    /// let answer = half_adder(a, b); 
-    /// assert_eq!(answer, (1, 0));
-    /// 
-    /// let c = 1
-    /// let d = 0
-    /// let answer_2 = half_adder(c, d)
-    /// assert_eq!(answer_2, (0, 1))
-    ///
-    /// ```
-    ///
-    /// Values will be returned in a tuple, as (carry, sum) respectively.
+
     pub fn half_adder(a: i32, b: i32) -> (i32, i32) {
         if a == 1 && b == 1 {
             return (1, 0)
@@ -54,27 +36,7 @@ pub mod ALU {
 
 
     }
-    /// Adds three bits, where the least significant bit of the addition is 
-    /// called sum, and the most significant bit is called carry.
-    ///
-    /// #Examples
-    ///
-    /// ```
-    /// let a = 1;
-    /// let b = 1;
-    /// let c = 1
-    /// let answer = full_adder(a, b, c); 
-    /// assert_eq!(answer, (1, 1));
-    /// let d = 0
-    /// let e = 0
-    /// let f = 1
-    /// 
-    /// let answer_2 = full_adder(d, e, f)
-    /// assert_eq!(answer_2, (0, 1))
-    ///
-    /// ```
-    ///
-    /// Values will be returned in a tuple, as (carry, sum) respectively.
+
     pub fn full_adder(a: i32, b: i32, c: i32) -> (i32, i32) {
         // We have to re-write this.
         // Update: we don't, if a HOF can use it properly. ^_-
@@ -160,45 +122,40 @@ pub mod ALU {
 
     #[derive(Debug, Clone)]
     pub struct ALU {
-        // **** By using Cell<T>, you can emulate field-level mutability. ****
         // We instruct the ALU on which function to compute, by setting
         // six input bits, called control bits, to selected binary values.
         // Each control but instructs the ALU to carry out a function.
         // 6 operations => 2^6 = 64 possible function outputs.
-        // So, let's take the function (x - 1):
-            // The control bit sequence for this is: [0|0|1|1|1|0]
-        // Because the zx, and nx bits ([0|0...]) are set to zero,
-        // the x input is neither zeroed, nor negated.
-        // The zy, and ny bits are both 1, so the y input is zeroed,
-        // then negated bitwise.
-        // The Control bits, and their boolean value,
+        // The Control bits, and their bo3olean value,
         // Have to map onto the expected selector bit values.
         pub  x: [i32;16], // 16 bit data inputs
         pub  y: [i32;16], // 16 bit data inputs 
         // These bits toggle the x input
         pub zx: i32, // Zero x input
-                     // mux 16 (a = x, b = [0..15]=false, sel=zx, out=zdx)
         pub nx: i32, // Negate x input
-                    // Not 16
         // These bits toggle the y input
         pub zy: i32, // Zero y input
         pub ny: i32, // Negate x input
-        // This toggles between And/Add
-        pub f: i32, 
-        // This bit instructs out to set out.
+        pub f: i32, // Function code, 1 => add, 0 => and
         pub no: i32, // negate output
-        pub otpt: [i32;16]
+        pub ng: i32, // true iff out != [0;16], false otherwise
+        pub zr: i32, // true iff out = [0;16], false otherwise
+        pub otpt: [i32;16] // 16 bit output
     }
 
     impl ALU {
-        fn new(x:  [i32;16], 
-                y: [i32;16],
-                zx: i32,
-                nx: i32,
-                zy: i32,
-                ny: i32,
-                f: i32,
-                no: i32) -> ALU {
+        fn new( x:  [i32;16], // 16 bit data inputs 
+                y: [i32;16],  // 16 bit data inputs
+                 // These bits toggle the x input
+                zx: i32, // Zero x input
+                nx: i32, // Negate x input
+                zy: i32, // Zero y input
+                ny: i32, // Negate y input
+                f: i32, // Toggles bit for add/and
+                no: i32, // Negate output
+                ng: i32,
+                zr: i32,
+                otpt: [i32;16]) -> ALU {
                 ALU {    
                     x: x,
                     y: y,
@@ -207,7 +164,10 @@ pub mod ALU {
                     zy: zy,
                     ny: ny,
                     f:  f,
-                    no: no
+                    no: no,
+                    ng: ng,
+                    zr: zr,
+                    otpt: otpt,
                 }
             }
         fn z_x(&mut self, x: [i32;16]) {
@@ -266,10 +226,24 @@ pub mod ALU {
             }
         }
         fn _f (&mut self) -> [i32;16] {
+            // let mut out = Vec::new();
             let mut out: [i32;16] = [0;16];
             if 1i32 == self.f {
                 for i in 0..16 {
-                    out[i] = full_adder(self.x[i], self.y[i]);
+                    let mut carry = 0;
+                    if self.x[i] + self.y[i] == 2 {
+                        carry = 1;
+                        out[i] = full_adder(self.x[i], self.y[i], carry).1;
+        
+                    }
+                    else if self.x[i] + self.y[i] == 1 {
+                        carry = 0;
+                        out[i] = full_adder(self.x[i], self.y[i], carry).1;
+                    }
+                    else {
+                        carry = 0;
+                        out[i] = full_adder(self.x[i], self.y[i], carry).1;
+                    }
                     self.otpt = out;
                 }
             }
@@ -287,9 +261,9 @@ pub mod ALU {
         fn n_o (&mut self, output: [i32;16]) -> [i32;16] {
             let mut out: [i32;16] = [0;16];
             for i in 0..16 {
-                out[i] = not_16(output);
-                return out
+                out[i] = not(output[i]);
             }
+            return out
         }
 
         fn z_o (&mut self) {
@@ -302,7 +276,8 @@ pub mod ALU {
         }
 
         fn o_gt0 (&mut self) {
-            if self.otpt > 0 {
+            let expctd_otpt: [i32;16] = [0;16];
+            if self.otpt != expctd_otpt {
                 self.ng = 1;
             } else {
                 self.ng = 0;
@@ -319,6 +294,7 @@ pub mod ALU {
             // let mut y_vec = x_vec.clone();
             let x: [i32;16] = [0;16];
             let y: [i32;16] = [0;16];
+            let otpt: [i32;16] = [0;16];
             ALU {
                 x: x,
                 y: y,
@@ -328,6 +304,9 @@ pub mod ALU {
                 ny: 0,
                 f:  0,
                 no: 0,
+                ng: 0,
+                zr: 0,
+                otpt: otpt
             }
         }
     }

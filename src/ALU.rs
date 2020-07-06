@@ -140,7 +140,7 @@ pub mod ALU {
     }
 
     impl ALU {
-        fn new( x:  [i32;16], // 16 bit data inputs 
+       pub fn new( x:  [i32;16], // 16 bit data inputs 
                 y: [i32;16],  // 16 bit data inputs
                  // These bits toggle the x input
                 zx: i32, // Zero x input
@@ -166,7 +166,7 @@ pub mod ALU {
                     otpt: otpt,
                 }
             }
-        fn z_x(&mut self, x: [i32;16]) {
+       pub fn z_x(&mut self, x: [i32;16]) {
             //  zero the x input according to the status
             // of the zx control bit.
             let mut y: [i32; 16] = [0; 16];
@@ -184,7 +184,7 @@ pub mod ALU {
             }
         }
 
-        fn n_x(&mut self, x: [i32; 16]) {
+       pub fn n_x(&mut self, x: [i32; 16]) {
             //  not the x input according to the status
             // of the nx control bit.
             let mut op_done = false;
@@ -199,7 +199,7 @@ pub mod ALU {
             }
         }
 
-        fn z_y(&mut self, y: [i32;16]) {
+        pub fn z_y(&mut self, y: [i32;16]) {
             //  zero the y input according to the status
             // of the zy control bit.
             let mut op_done = false;
@@ -215,7 +215,7 @@ pub mod ALU {
                 }
             }
         }
-        fn ny(&mut self, y: [i32; 16]) {
+        pub fn ny(&mut self, y: [i32; 16]) {
             //  not the y input according to the status
             // of the ny control bit.
             let mut op_done = false;
@@ -229,7 +229,7 @@ pub mod ALU {
                 }
             }
         }
-        fn _f (&mut self) -> [i32;16] {
+        pub fn _f (&mut self) -> [i32;16] {
             // Performs an operation according to the function control bit f.
             let mut out: [i32;16] = [0;16];
             if 1i32 == self.f {
@@ -262,7 +262,7 @@ pub mod ALU {
             return output
 
         }
-        fn n_o (&mut self, output: [i32;16]) -> [i32;16] {
+        pub fn n_o (&mut self, output: [i32;16]) -> [i32;16] {
             //  not the output according to the status
             // of the no control bit.
             let mut out: [i32;16] = [0;16];
@@ -272,7 +272,7 @@ pub mod ALU {
             return out
         }
 
-        fn z_o (&mut self) {
+        pub  fn z_o (&mut self) {
             //  zero the output according to the status
             // of the zo control bit.
             let mut z_b: [i32;16] = [0;16];
@@ -283,7 +283,7 @@ pub mod ALU {
             }
         }
 
-        fn o_gt0 (&mut self) {
+        pub fn o_gt0 (&mut self) {
             // set multiplexor(?) bits according to output value.
             let expctd_otpt: [i32;16] = [0;16];
             if self.otpt != expctd_otpt {

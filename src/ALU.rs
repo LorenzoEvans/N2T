@@ -21,6 +21,7 @@ pub mod ALU {
     };
 
     pub fn half_adder(a: i32, b: i32) -> (i32, i32) {
+        // returns a tuple of the order (carry, sum), not accounting for overflow.
         if a == 1 && b == 1 {
             return (1, 0)
         }
@@ -38,6 +39,7 @@ pub mod ALU {
     }
 
     pub fn full_adder(a: i32, b: i32, c: i32) -> (i32, i32) {
+        // returns a tuple of the order (carry, sum), not accounting for overflow.
         // We have to re-write this.
         // Update: we don't, if a HOF can use it properly. ^_-
 
@@ -74,9 +76,13 @@ pub mod ALU {
     }
 
     pub fn add_16(array_a: [i32; 16], array_b: [i32; 16]) -> Vec<i32> {
-        // We can generate the bitwise addition and the carries,
-        // the problem is how to fold those carries back into the string of
-        // bits efficiently,
+        // Performs bitwise addition on two input arrays, returning a mutable vector of
+        // sum bits, not accounting for overflow in terms of sum, but preventing
+        // what would be a real stack overflow in a CPU.
+        // Solved
+            // We can generate the bitwise addition and the carries,
+            // the problem is how to fold those carries back into the string of
+            // bits efficiently,
         let mut out = Vec::new();
         let mut carry = 0;
         let mut result: Vec<i32> = Vec::new();
@@ -97,21 +103,11 @@ pub mod ALU {
             }
         }
 
-        // for i in 0..16 {
-        //     match out[i] {
-        //         (0, 0) => result.push(0),
-        //         (0, 1) => result.push(1),
-        //         (1, 0) => result.push(0), <= This is problematic. We have a carry but no sum to push.
-                                            //  Perhaps result[i - 1], if it's valid Rust. I kind of doubt it.
-        //         (1, 1) => result.push(1), // <= So is this, for similar reasons.
-        //         _ => println!("Not important")
-        //     }
-        // }
-
         return out
     }
 
     pub fn inc_16 (in_arr: [i32; 16]) -> [i32;16] {
+        // Incrementing a 16 bit input array, not accounting for overflow.
         let mut out: [i32; 16] = [1; 16];
         for i in 0..16 {
             out[i] = in_arr[i] + 1
@@ -171,6 +167,8 @@ pub mod ALU {
                 }
             }
         fn z_x(&mut self, x: [i32;16]) {
+            //  zero the x input according to the status
+            // of the zx control bit.
             let mut y: [i32; 16] = [0; 16];
             let mut op_done = false;
             while op_done != true {
@@ -187,6 +185,8 @@ pub mod ALU {
         }
 
         fn n_x(&mut self, x: [i32; 16]) {
+            //  not the x input according to the status
+            // of the nx control bit.
             let mut op_done = false;
             while op_done != true {
                 if 0i32 != self.zx {
@@ -200,6 +200,8 @@ pub mod ALU {
         }
 
         fn z_y(&mut self, y: [i32;16]) {
+            //  zero the y input according to the status
+            // of the zy control bit.
             let mut op_done = false;
             while op_done != true {
                 if 1i32 != self.zy {
@@ -214,6 +216,8 @@ pub mod ALU {
             }
         }
         fn ny(&mut self, y: [i32; 16]) {
+            //  not the y input according to the status
+            // of the ny control bit.
             let mut op_done = false;
             while op_done != true {
                 if 0i32 != self.ny {
@@ -226,7 +230,7 @@ pub mod ALU {
             }
         }
         fn _f (&mut self) -> [i32;16] {
-            // let mut out = Vec::new();
+            // Performs an operation according to the function control bit f.
             let mut out: [i32;16] = [0;16];
             if 1i32 == self.f {
                 for i in 0..16 {
@@ -259,6 +263,8 @@ pub mod ALU {
 
         }
         fn n_o (&mut self, output: [i32;16]) -> [i32;16] {
+            //  not the output according to the status
+            // of the no control bit.
             let mut out: [i32;16] = [0;16];
             for i in 0..16 {
                 out[i] = not(output[i]);
@@ -267,6 +273,8 @@ pub mod ALU {
         }
 
         fn z_o (&mut self) {
+            //  zero the output according to the status
+            // of the zo control bit.
             let mut z_b: [i32;16] = [0;16];
             if self.otpt == z_b {
                 self.zr = 1;
@@ -276,6 +284,7 @@ pub mod ALU {
         }
 
         fn o_gt0 (&mut self) {
+            // set multiplexor(?) bits according to output value.
             let expctd_otpt: [i32;16] = [0;16];
             if self.otpt != expctd_otpt {
                 self.ng = 1;
@@ -289,9 +298,6 @@ pub mod ALU {
     }
     impl Default for ALU {
         fn default() -> ALU {
-            // let mut x_vec = Vec::new();
-            // for i in 0..16 {x_vec.push(0)}
-            // let mut y_vec = x_vec.clone();
             let x: [i32;16] = [0;16];
             let y: [i32;16] = [0;16];
             let otpt: [i32;16] = [0;16];

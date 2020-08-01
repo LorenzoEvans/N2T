@@ -23,7 +23,7 @@ pub mod ALU {
     pub fn half_adder(a: i32, b: i32) -> (i32, i32) {
         // returns a tuple of the order (carry, sum), not accounting for overflow.
         if a == 1 && b == 1 {
-            return (1, 0)
+            return (1, 1)
         }
         else if a == 1 && b == 0 {
             return (0, 1)
@@ -199,7 +199,7 @@ pub mod ALU {
             }
         }
 
-        pub fn z_y(&mut self, y: [i32;16]) {
+        pub fn z_y(&mut self) {
             //  zero the y input according to the status
             // of the zy control bit.
             let mut op_done = false;

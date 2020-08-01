@@ -19,6 +19,7 @@ mod l_g_tests {
         not, // tested
         not_16 // tested
     };
+    use nand2_tetris::ALU::ALU::{ALU, half_adder};
     
     #[test]
     fn test_nand() {
@@ -308,6 +309,32 @@ mod l_g_tests {
         let expected_out = [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0];
         
         assert_eq!(not_16(not_16_arr_1), expected_out);
+    }
+    #[test]
+    fn test_zero_y_input() {
+        let mut alu = ALU::default();
+        let expctd_otpt: [i32;16] = [0;16];
+        let y_input: [i32;16] = [1;16];
+        alu.y = y_input;
+        alu.zy = 1;
+        alu.z_y();
+        assert_eq!(expctd_otpt, alu.y);
+        
+    }
+
+    #[test]
+    fn test_half_adder() {
+        let alu = ALU::default();
+        let on_bit = 1;
+        let off_bit = 0;
+
+        let result_1 = half_adder(on_bit, on_bit).1;
+        let result_2 = half_adder(on_bit, off_bit).1;
+        let result_3 = half_adder(off_bit, off_bit).1;
+
+        assert_eq!(result_1, 1);
+        assert_eq!(result_2, 1);
+        assert_eq!(result_3, 0);
     }
 
 }
